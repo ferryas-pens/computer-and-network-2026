@@ -6,11 +6,11 @@ Modul ajar Markdown yang mengikuti **RPS Konsep Jaringan (TI043102)**, D4 Teknik
 
 | File | Bab | Isi |
 |---|---|---|
-| `00-pengantar-dan-peta-rps.md` | — | Kata pengantar, peta RPS→bab, pemetaan CPMK/CPL, daftar pustaka master |
-| `bab-01-pengantar-jaringan-internet.md` | 1 | Definisi, LAN/MAN/WAN, metrik kinerja, sejarah, tata kelola |
-| `bab-02-model-osi-tcpip.md` | 2 | Model berlapis, OSI vs TCP/IP, **enkapsulasi** (CPMK-3) |
-| `bab-03-physical-layer.md` | 3 | Sinyal, Nyquist/Shannon, encoding, media transmisi |
-| `bab-04-data-link-layer.md` | 4 | Framing, MAC, switch, **ARP**, **VLAN 802.1Q**, Wi-Fi |
+| [00-pengantar-dan-peta-rps.md](00-pengantar-dan-peta-rps.md) | — | Kata pengantar, peta RPS→bab, pemetaan CPMK/CPL, daftar pustaka master |
+| [bab-01-pengantar-jaringan-internet.md](bab-01-pengantar-jaringan-internet.md)| 1 | Definisi, LAN/MAN/WAN, metrik kinerja, sejarah, tata kelola |
+| [bab-02-model-osi-tcpip.md](bab-02-model-osi-tcpip.md) | 2 | Model berlapis, OSI vs TCP/IP, **enkapsulasi** (CPMK-3) |
+| [bab-03-physical-layer.md](bab-03-physical-layer.md) | 3 | Sinyal, Nyquist/Shannon, encoding, media transmisi |
+| [bab-04-data-link-layer.md](bab-04-data-link-layer.md) | 4 | Framing, MAC, switch, **ARP**, **VLAN 802.1Q**, Wi-Fi |
 | `bab-05-network-layer-ip.md` | 5 | Header IPv4, pengalamatan, CIDR, ICMP, **IPv6** |
 | `bab-06-ip-subnetting.md` | 6 | Meminjam bit, rumus, **VLSM**, subnetting IPv6 |
 | `bab-07-static-routing.md` | 7 | Konsep routing, tabel routing, **static route**, default gateway |
