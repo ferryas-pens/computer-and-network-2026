@@ -7,7 +7,7 @@ Modul ajar Markdown yang mengikuti **RPS Konsep Jaringan (TI043102)**, D4 Teknik
 | File | Bab | Isi |
 |---|---|---|
 | `00-pengantar-dan-peta-rps.md` | — | Kata pengantar, peta RPS→bab, pemetaan CPMK/CPL, daftar pustaka master |
-| `bab-01-pengantar-jaringan-internet.md` | 1 | Definisi, LAN/MAN/WAN, metrik kinerja, sejarah, tata kelola |
+| `bab-01-pengantar-jaringan-internet.md` (bab-01-pengantar-jaringan-internet.md)| 1 | Definisi, LAN/MAN/WAN, metrik kinerja, sejarah, tata kelola |
 | `bab-02-model-osi-tcpip.md` | 2 | Model berlapis, OSI vs TCP/IP, **enkapsulasi** (CPMK-3) |
 | `bab-03-physical-layer.md` | 3 | Sinyal, Nyquist/Shannon, encoding, media transmisi |
 | `bab-04-data-link-layer.md` | 4 | Framing, MAC, switch, **ARP**, **VLAN 802.1Q**, Wi-Fi |
