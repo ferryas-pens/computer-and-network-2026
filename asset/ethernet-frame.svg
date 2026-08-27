@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 820 340" font-family="Calibri, Arial, sans-serif">
+  <style>
+    .title{font-size:18px;font-weight:bold;fill:#12263a}
+    .fld{font-size:12px;fill:#fff;font-weight:bold}
+    .byt{font-size:10px;fill:#12263a}
+    .note{font-size:11px;fill:#4a5568}
+    .tag{font-size:11px;fill:#12263a;font-weight:bold}
+  </style>
+  <text x="410" y="26" text-anchor="middle" class="title">Struktur Frame Ethernet II (+ tag VLAN 802.1Q)</text>
+
+  <!-- main frame row -->
+  <g>
+    <rect x="20"  y="50" width="90"  height="50" fill="#152a45"/><text x="65"  y="72" text-anchor="middle" class="fld">Preamble</text><text x="65"  y="88" text-anchor="middle" class="fld">+SFD</text>
+    <rect x="110" y="50" width="95"  height="50" fill="#1f3a5f"/><text x="157" y="79" text-anchor="middle" class="fld">Dest MAC</text>
+    <rect x="205" y="50" width="95"  height="50" fill="#26557a"/><text x="252" y="79" text-anchor="middle" class="fld">Src MAC</text>
+    <rect x="300" y="50" width="70"  height="50" fill="#2e7d8a"/><text x="335" y="73" text-anchor="middle" class="fld">Type/</text><text x="335" y="88" text-anchor="middle" class="fld">Length</text>
+    <rect x="370" y="50" width="330" height="50" fill="#f2d492" stroke="#c98f1c"/><text x="535" y="79" text-anchor="middle" class="byt" font-weight="bold">Payload / Data (46–1500 byte)</text>
+    <rect x="700" y="50" width="70"  height="50" fill="#1f3a5f"/><text x="735" y="79" text-anchor="middle" class="fld">FCS</text>
+  </g>
+  <!-- byte counts -->
+  <text x="65"  y="115" text-anchor="middle" class="byt">8 B</text>
+  <text x="157" y="115" text-anchor="middle" class="byt">6 B</text>
+  <text x="252" y="115" text-anchor="middle" class="byt">6 B</text>
+  <text x="335" y="115" text-anchor="middle" class="byt">2 B</text>
+  <text x="535" y="115" text-anchor="middle" class="byt">variabel</text>
+  <text x="735" y="115" text-anchor="middle" class="byt">4 B</text>
+
+  <!-- VLAN tag insertion -->
+  <line x1="300" y1="100" x2="300" y2="150" stroke="#b00020" stroke-width="1.5" stroke-dasharray="4"/>
+  <text x="140" y="168" class="tag" fill="#b00020">Tag 802.1Q (4 byte) disisipkan di sini →</text>
+  <g>
+    <rect x="415" y="150" width="120" height="44" fill="#b00020"/><text x="475" y="170" text-anchor="middle" class="fld">TPID</text><text x="475" y="186" text-anchor="middle" class="fld">0x8100</text>
+    <rect x="535" y="150" width="220" height="44" fill="#7a2233"/>
+    <text x="645" y="168" text-anchor="middle" class="fld">TCI</text>
+    <text x="645" y="184" text-anchor="middle" class="fld" font-size="10">PCP(3b) DEI(1b) VID(12b)</text>
+  </g>
+  <text x="415" y="212" class="note">VID = VLAN ID (12 bit → 4094 VLAN berguna). PCP = prioritas (QoS). TPID menandai frame ber-tag.</text>
+
+  <text x="20" y="250" class="note" font-weight="bold">Poin kunci:</text>
+  <text x="20" y="270" class="note">• Alamat MAC = 48 bit (mis. 00:1A:2B:3C:4D:5E); 24 bit pertama = OUI (vendor).</text>
+  <text x="20" y="288" class="note">• FCS memakai CRC-32 untuk deteksi error; frame rusak dibuang (Data Link tidak me-retransmit — itu tugas TCP).</text>
+  <text x="20" y="306" class="note">• Type ≥ 0x0600 → EtherType (mis. 0x0800 = IPv4, 0x86DD = IPv6, 0x0806 = ARP).</text>
+  <text x="20" y="330" class="note" font-style="italic">Gambar orisinal (native) — bebas dikutip/diedit.</text>
+</svg>

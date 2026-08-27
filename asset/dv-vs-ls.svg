@@ -1,0 +1,50 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 380" font-family="Calibri, Arial, sans-serif">
+  <style>
+    .title{font-size:18px;font-weight:bold;fill:#12263a}
+    .h{font-size:15px;font-weight:bold;fill:#fff}
+    .b{font-size:12px;fill:#12263a}
+    .note{font-size:11px;fill:#4a5568}
+    .rt{font-size:11px;fill:#fff;font-weight:bold}
+  </style>
+  <text x="400" y="26" text-anchor="middle" class="title">Dua filosofi routing dinamis</text>
+
+  <!-- Distance Vector panel -->
+  <rect x="20" y="45" width="370" height="30" fill="#26557a"/>
+  <text x="205" y="66" text-anchor="middle" class="h">Distance-Vector (RIP)</text>
+  <text x="205" y="94" text-anchor="middle" class="b" font-style="italic">"Routing by rumor" — hanya tahu jarak ke tetangga</text>
+
+  <circle cx="80"  cy="150" r="26" fill="#1f3a5f"/><text x="80"  y="155" text-anchor="middle" class="rt">A</text>
+  <circle cx="205" cy="150" r="26" fill="#1f3a5f"/><text x="205" y="155" text-anchor="middle" class="rt">B</text>
+  <circle cx="330" cy="150" r="26" fill="#1f3a5f"/><text x="330" y="155" text-anchor="middle" class="rt">C</text>
+  <line x1="106" y1="150" x2="179" y2="150" stroke="#12263a" stroke-width="2"/>
+  <line x1="231" y1="150" x2="304" y2="150" stroke="#12263a" stroke-width="2"/>
+  <text x="142" y="140" text-anchor="middle" class="note">1</text>
+  <text x="267" y="140" text-anchor="middle" class="note">1</text>
+
+  <text x="30" y="205" class="note">• A berbagi seluruh tabelnya ke B secara berkala.</text>
+  <text x="30" y="223" class="note">• A hanya tahu: "C berjarak 2 lewat B" — tak tahu peta lengkap.</text>
+  <text x="30" y="241" class="note">• Metrik = hop count (RIP maks 15). Konvergensi lambat.</text>
+  <text x="30" y="259" class="note">• Sederhana, hemat memori; rawan loop (perlu split-horizon).</text>
+
+  <!-- Link State panel -->
+  <rect x="410" y="45" width="370" height="30" fill="#2e7d8a"/>
+  <text x="595" y="66" text-anchor="middle" class="h">Link-State (OSPF)</text>
+  <text x="595" y="94" text-anchor="middle" class="b" font-style="italic">Tiap router punya peta lengkap topologi</text>
+
+  <circle cx="470" cy="150" r="26" fill="#2e7d8a"/><text x="470" y="155" text-anchor="middle" class="rt">A</text>
+  <circle cx="595" cy="135" r="26" fill="#2e7d8a"/><text x="595" y="140" text-anchor="middle" class="rt">B</text>
+  <circle cx="720" cy="150" r="26" fill="#2e7d8a"/><text x="720" y="155" text-anchor="middle" class="rt">C</text>
+  <circle cx="595" cy="215" r="26" fill="#2e7d8a"/><text x="595" y="220" text-anchor="middle" class="rt">D</text>
+  <line x1="496" y1="150" x2="569" y2="139" stroke="#12263a" stroke-width="2"/>
+  <line x1="621" y1="139" x2="694" y2="150" stroke="#12263a" stroke-width="2"/>
+  <line x1="483" y1="172" x2="576" y2="205" stroke="#12263a" stroke-width="2"/>
+  <line x1="614" y1="205" x2="707" y2="172" stroke="#12263a" stroke-width="2"/>
+
+  <text x="415" y="258" class="note">• Setiap router membanjiri (flood) info link-nya ke semua.</text>
+  <text x="415" y="276" class="note">• Semua membangun peta identik, lalu hitung jalur terpendek</text>
+  <text x="415" y="294" class="note">   dengan algoritma Dijkstra (metrik = cost/bandwidth).</text>
+  <text x="415" y="312" class="note">• Konvergensi cepat, skalabel (area); butuh CPU/memori lebih.</text>
+
+  <text x="20" y="352" class="note" font-weight="bold">Inti: DV berbagi "kesimpulan" (jarak); LS berbagi "fakta" (peta) lalu tiap router menyimpulkan sendiri.</text>
+  <text x="20" y="374" class="note" font-style="italic">Gambar orisinal (native) — bebas dikutip/diedit.</text>
+</svg>

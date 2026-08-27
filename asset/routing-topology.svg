@@ -1,0 +1,63 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 400" font-family="Calibri, Arial, sans-serif">
+  <style>
+    .title{font-size:18px;font-weight:bold;fill:#12263a}
+    .rt{font-size:12px;fill:#fff;font-weight:bold}
+    .net{font-size:12px;fill:#12263a}
+    .mono{font-size:12px;font-family:Consolas,monospace;fill:#12263a}
+    .hd{font-size:12px;fill:#fff;font-weight:bold}
+    .note{font-size:11px;fill:#4a5568}
+  </style>
+  <text x="400" y="26" text-anchor="middle" class="title">Static Routing: R1 harus diberi tahu jalan ke jaringan jauh</text>
+
+  <!-- networks & routers -->
+  <rect x="30"  y="70" width="110" height="40" rx="6" fill="#2e7d8a"/><text x="85" y="95" text-anchor="middle" class="rt">LAN A</text>
+  <text x="85" y="126" text-anchor="middle" class="net">10.0.1.0/24</text>
+
+  <circle cx="220" cy="90" r="34" fill="#1f3a5f"/><text x="220" y="95" text-anchor="middle" class="rt">R1</text>
+  <line x1="140" y1="90" x2="186" y2="90" stroke="#12263a" stroke-width="2"/>
+
+  <line x1="254" y1="90" x2="366" y2="90" stroke="#12263a" stroke-width="2"/>
+  <text x="310" y="82" text-anchor="middle" class="net">10.0.12.0/30</text>
+  <circle cx="400" cy="90" r="34" fill="#1f3a5f"/><text x="400" y="95" text-anchor="middle" class="rt">R2</text>
+
+  <line x1="434" y1="90" x2="546" y2="90" stroke="#12263a" stroke-width="2"/>
+  <text x="490" y="82" text-anchor="middle" class="net">10.0.23.0/30</text>
+  <circle cx="580" cy="90" r="34" fill="#1f3a5f"/><text x="580" y="95" text-anchor="middle" class="rt">R3</text>
+
+  <line x1="614" y1="90" x2="660" y2="90" stroke="#12263a" stroke-width="2"/>
+  <rect x="660" y="70" width="110" height="40" rx="6" fill="#e0a020"/><text x="715" y="95" text-anchor="middle" class="net">LAN B</text>
+  <text x="715" y="126" text-anchor="middle" class="net">10.0.3.0/24</text>
+
+  <!-- static route command -->
+  <rect x="30" y="160" width="740" height="34" rx="4" fill="#152a45"/>
+  <text x="45" y="182" class="mono" style="fill:#fff">R1(config)# ip route 10.0.3.0 255.255.255.0 10.0.12.2      ← "untuk ke LAN B, lewat R2 (next-hop)"</text>
+
+  <!-- routing table -->
+  <text x="30" y="222" class="note" font-weight="bold">Tabel routing R1 setelah konfigurasi:</text>
+  <g>
+    <rect x="30" y="230" width="200" height="26" fill="#12263a"/><text x="40" y="248" class="hd">Tujuan (prefix)</text>
+    <rect x="230" y="230" width="150" height="26" fill="#12263a"/><text x="240" y="248" class="hd">Next-hop</text>
+    <rect x="380" y="230" width="140" height="26" fill="#12263a"/><text x="390" y="248" class="hd">Antarmuka</text>
+    <rect x="520" y="230" width="120" height="26" fill="#12263a"/><text x="530" y="248" class="hd">Tipe</text>
+  </g>
+  <g class="mono">
+    <rect x="30" y="256" width="200" height="26" fill="#f4f6f8" stroke="#cbd5e0"/><text x="40" y="274">10.0.1.0/24</text>
+    <rect x="230" y="256" width="150" height="26" fill="#f4f6f8" stroke="#cbd5e0"/><text x="240" y="274">—</text>
+    <rect x="380" y="256" width="140" height="26" fill="#f4f6f8" stroke="#cbd5e0"/><text x="390" y="274">Gi0/0</text>
+    <rect x="520" y="256" width="120" height="26" fill="#f4f6f8" stroke="#cbd5e0"/><text x="530" y="274">Connected</text>
+
+    <rect x="30" y="282" width="200" height="26" fill="#fff" stroke="#cbd5e0"/><text x="40" y="300">10.0.12.0/30</text>
+    <rect x="230" y="282" width="150" height="26" fill="#fff" stroke="#cbd5e0"/><text x="240" y="300">—</text>
+    <rect x="380" y="282" width="140" height="26" fill="#fff" stroke="#cbd5e0"/><text x="390" y="300">Gi0/1</text>
+    <rect x="520" y="282" width="120" height="26" fill="#fff" stroke="#cbd5e0"/><text x="530" y="300">Connected</text>
+
+    <rect x="30" y="308" width="200" height="26" fill="#fdf0d5" stroke="#c98f1c"/><text x="40" y="326">10.0.3.0/24</text>
+    <rect x="230" y="308" width="150" height="26" fill="#fdf0d5" stroke="#c98f1c"/><text x="240" y="326">10.0.12.2</text>
+    <rect x="380" y="308" width="140" height="26" fill="#fdf0d5" stroke="#c98f1c"/><text x="390" y="326">Gi0/1</text>
+    <rect x="520" y="308" width="120" height="26" fill="#fdf0d5" stroke="#c98f1c"/><text x="530" y="326">Static</text>
+  </g>
+
+  <text x="30" y="356" class="note">Jaringan yang terhubung langsung (Connected) otomatis dikenal; jaringan jauh (10.0.3.0/24) harus ditambahkan manual.</text>
+  <text x="30" y="374" class="note">Kelemahan: jika topologi berubah/link putus, admin harus mengubah rute manual — dasar kebutuhan dynamic routing (Bab 8).</text>
+  <text x="30" y="394" class="note" font-style="italic">Gambar orisinal (native) — bebas dikutip/diedit.</text>
+</svg>

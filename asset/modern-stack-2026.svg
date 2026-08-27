@@ -1,0 +1,55 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 430" font-family="Calibri, Arial, sans-serif">
+  <style>
+    .title{font-size:18px;font-weight:bold;fill:#12263a}
+    .lyr{font-size:13px;fill:#fff;font-weight:bold}
+    .col{font-size:13px;font-weight:bold;fill:#12263a}
+    .k{font-size:11px;fill:#4a5568}
+    .m{font-size:11px;fill:#12263a;font-weight:bold}
+    .note{font-size:11px;fill:#4a5568}
+  </style>
+  <text x="400" y="24" text-anchor="middle" class="title">Peta Teknologi Internet per Layer: klasik → 2026</text>
+
+  <text x="120" y="52" text-anchor="middle" class="col">Layer</text>
+  <text x="330" y="52" text-anchor="middle" class="col">Klasik (buku edisi lama)</text>
+  <text x="610" y="52" text-anchor="middle" class="col">Terkini (2026)</text>
+
+  <!-- rows -->
+  <!-- Application -->
+  <rect x="30" y="60" width="180" height="66" fill="#e0a020"/><text x="120" y="98" text-anchor="middle" class="lyr" style="fill:#12263a">Application</text>
+  <rect x="220" y="60" width="270" height="66" fill="#f4f6f8" stroke="#cbd5e0"/>
+  <text x="230" y="82" class="k">HTTP/1.1, HTTP/2</text><text x="230" y="100" class="k">DNS teks, TLS 1.2</text><text x="230" y="118" class="k">SMTP, FTP</text>
+  <rect x="500" y="60" width="270" height="66" fill="#fdf5e6" stroke="#c98f1c"/>
+  <text x="510" y="82" class="m">HTTP/3, DoH/DoT/DoQ</text><text x="510" y="100" class="m">TLS 1.3 + PQC (ML-KEM), ECH</text><text x="510" y="118" class="k">DNSSEC</text>
+
+  <!-- Transport -->
+  <rect x="30" y="128" width="180" height="56" fill="#2e7d8a"/><text x="120" y="161" text-anchor="middle" class="lyr">Transport</text>
+  <rect x="220" y="128" width="270" height="56" fill="#f4f6f8" stroke="#cbd5e0"/>
+  <text x="230" y="150" class="k">TCP + CUBIC/Reno</text><text x="230" y="170" class="k">UDP</text>
+  <rect x="500" y="128" width="270" height="56" fill="#eef6f5" stroke="#2e7d8a"/>
+  <text x="510" y="150" class="m">QUIC + BBR (di atas UDP)</text><text x="510" y="170" class="k">TCP tetap dominan non-web</text>
+
+  <!-- Network -->
+  <rect x="30" y="186" width="180" height="56" fill="#26557a"/><text x="120" y="219" text-anchor="middle" class="lyr">Network</text>
+  <rect x="220" y="186" width="270" height="56" fill="#f4f6f8" stroke="#cbd5e0"/>
+  <text x="230" y="208" class="k">IPv4 + NAT</text><text x="230" y="228" class="k">RIP/OSPF, BGP</text>
+  <rect x="500" y="186" width="270" height="56" fill="#eaf0f6" stroke="#26557a"/>
+  <text x="510" y="208" class="m">IPv6 (±50%), SRv6</text><text x="510" y="228" class="m">RPKI/ROV, 464XLAT</text>
+
+  <!-- Link -->
+  <rect x="30" y="244" width="180" height="56" fill="#1f3a5f"/><text x="120" y="277" text-anchor="middle" class="lyr">Data Link</text>
+  <rect x="220" y="244" width="270" height="56" fill="#f4f6f8" stroke="#cbd5e0"/>
+  <text x="230" y="266" class="k">Ethernet, VLAN 802.1Q</text><text x="230" y="286" class="k">Wi-Fi 5/6, WPA2</text>
+  <rect x="500" y="244" width="270" height="56" fill="#e8edf3" stroke="#1f3a5f"/>
+  <text x="510" y="266" class="m">Wi-Fi 7 (MLO), WPA3</text><text x="510" y="286" class="m">VXLAN/EVPN, TSN, Ultra Ethernet</text>
+
+  <!-- Physical -->
+  <rect x="30" y="302" width="180" height="56" fill="#152a45"/><text x="120" y="335" text-anchor="middle" class="lyr">Physical</text>
+  <rect x="220" y="302" width="270" height="56" fill="#f4f6f8" stroke="#cbd5e0"/>
+  <text x="230" y="324" class="k">1–10G, coax, UTP</text><text x="230" y="344" class="k">3G/4G</text>
+  <rect x="500" y="302" width="270" height="56" fill="#e6eaf0" stroke="#152a45"/>
+  <text x="510" y="324" class="m">800G / 1.6T Ethernet (AI)</text><text x="510" y="344" class="m">Wi-Fi 7, 5G, riset 6G, fiber</text>
+
+  <text x="30" y="384" class="note" font-weight="bold">Benang merah: konsep berlapis (Bab 2) tetap; isinya yang berevolusi. Model = alat berpikir yang awet.</text>
+  <text x="30" y="404" class="note">Pendorong 2026: video &amp; mobilitas (QUIC), kelangkaan IPv4 (IPv6), keamanan (PQC, RPKI), dan beban AI (Ultra Ethernet, 1.6T).</text>
+  <text x="30" y="424" class="note" font-style="italic">Gambar orisinal (native) — bebas dikutip/diedit. Angka bersifat snapshot 2026 — verifikasi ulang.</text>
+</svg>

@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 380" font-family="Calibri, Arial, sans-serif">
+  <style>
+    .title{font-size:18px;font-weight:bold;fill:#12263a}
+    .lab{font-size:12px;fill:#12263a}
+    .labw{font-size:12px;fill:#fff;font-weight:bold}
+    .mono{font-size:13px;font-family:Consolas,monospace;fill:#12263a}
+    .note{font-size:11px;fill:#4a5568}
+  </style>
+  <text x="380" y="24" text-anchor="middle" class="title">Subnetting: memecah 192.168.1.0/24 menjadi 4 subnet /26</text>
+
+  <!-- bit structure -->
+  <text x="30" y="60" class="lab" font-weight="bold">Struktur 32 bit alamat:</text>
+  <g stroke="#12263a" stroke-width="1">
+    <rect x="30"  y="70" width="470" height="38" fill="#1f3a5f"/><text x="265" y="94" text-anchor="middle" class="labw">Network (24 bit dipinjam institusi)</text>
+    <rect x="500" y="70" width="90"  height="38" fill="#e0a020"/><text x="545" y="94" text-anchor="middle" class="lab">Subnet</text>
+    <rect x="590" y="70" width="140" height="38" fill="#2e7d8a"/><text x="660" y="94" text-anchor="middle" class="labw">Host</text>
+  </g>
+  <text x="545" y="124" text-anchor="middle" class="note">+2 bit</text>
+  <text x="660" y="124" text-anchor="middle" class="note">6 bit → 64 alamat</text>
+  <text x="30" y="124" class="note">/24 → /26 : meminjam 2 bit host untuk subnet (2² = 4 subnet).</text>
+
+  <!-- table of subnets -->
+  <g>
+    <rect x="30" y="150" width="700" height="30" fill="#12263a"/>
+    <text x="45"  y="170" class="labw">Subnet</text>
+    <text x="200" y="170" class="labw">Network ID</text>
+    <text x="360" y="170" class="labw">Rentang Host</text>
+    <text x="600" y="170" class="labw">Broadcast</text>
+  </g>
+  <g class="mono">
+    <rect x="30" y="180" width="700" height="34" fill="#f4f6f8" stroke="#cbd5e0"/>
+    <text x="45"  y="202">#1 /26</text><text x="200" y="202">192.168.1.0</text><text x="360" y="202">.1 – .62</text><text x="600" y="202">192.168.1.63</text>
+    <rect x="30" y="214" width="700" height="34" fill="#ffffff" stroke="#cbd5e0"/>
+    <text x="45"  y="236">#2 /26</text><text x="200" y="236">192.168.1.64</text><text x="360" y="236">.65 – .126</text><text x="600" y="236">192.168.1.127</text>
+    <rect x="30" y="248" width="700" height="34" fill="#f4f6f8" stroke="#cbd5e0"/>
+    <text x="45"  y="270">#3 /26</text><text x="200" y="270">192.168.1.128</text><text x="360" y="270">.129 – .190</text><text x="600" y="270">192.168.1.191</text>
+    <rect x="30" y="282" width="700" height="34" fill="#ffffff" stroke="#cbd5e0"/>
+    <text x="45"  y="304">#4 /26</text><text x="200" y="304">192.168.1.192</text><text x="360" y="304">.193 – .254</text><text x="600" y="304">192.168.1.255</text>
+  </g>
+
+  <text x="30" y="338" class="note">Netmask /26 = 255.255.255.192. Tiap subnet: 64 alamat, 62 host valid (−1 network, −1 broadcast).</text>
+  <text x="30" y="356" class="note">Rumus: jumlah subnet = 2ˢ (s = bit dipinjam); host valid = 2ʰ − 2 (h = bit host tersisa).</text>
+  <text x="30" y="374" class="note" font-style="italic">Gambar orisinal (native) — bebas dikutip/diedit.</text>
+</svg>

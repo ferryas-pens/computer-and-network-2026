@@ -1,0 +1,65 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 780 430" font-family="Calibri, Arial, sans-serif">
+  <style>
+    .title{font-size:19px;font-weight:bold;fill:#12263a}
+    .lyr{font-size:13px;font-weight:bold;fill:#12263a}
+    .hdr{font-size:11px;fill:#fff;font-weight:bold}
+    .data{font-size:12px;fill:#12263a;font-weight:bold}
+    .pdu{font-size:12px;font-style:italic;fill:#2e7d8a;font-weight:bold}
+    .note{font-size:11px;fill:#4a5568}
+  </style>
+
+  <text x="390" y="28" text-anchor="middle" class="title">Enkapsulasi: header ditambahkan tiap turun satu layer</text>
+
+  <!-- Application -->
+  <text x="20" y="70" class="lyr">Application</text>
+  <rect x="150" y="55" width="440" height="26" rx="3" fill="#f2d492" stroke="#c98f1c"/>
+  <text x="370" y="72" text-anchor="middle" class="data">Data (pesan aplikasi)</text>
+  <text x="700" y="72" class="pdu">Message</text>
+
+  <!-- Transport -->
+  <text x="20" y="122" class="lyr">Transport</text>
+  <rect x="150" y="107" width="70" height="26" rx="3" fill="#2e7d8a"/>
+  <text x="185" y="124" text-anchor="middle" class="hdr">TCP hdr</text>
+  <rect x="220" y="107" width="370" height="26" rx="3" fill="#f2d492" stroke="#c98f1c"/>
+  <text x="405" y="124" text-anchor="middle" class="data">Data</text>
+  <text x="700" y="124" class="pdu">Segment</text>
+
+  <!-- Internet -->
+  <text x="20" y="174" class="lyr">Internet</text>
+  <rect x="150" y="159" width="70" height="26" rx="3" fill="#26557a"/>
+  <text x="185" y="176" text-anchor="middle" class="hdr">IP hdr</text>
+  <rect x="220" y="159" width="70" height="26" rx="3" fill="#2e7d8a"/>
+  <text x="255" y="176" text-anchor="middle" class="hdr">TCP hdr</text>
+  <rect x="290" y="159" width="300" height="26" rx="3" fill="#f2d492" stroke="#c98f1c"/>
+  <text x="440" y="176" text-anchor="middle" class="data">Data</text>
+  <text x="700" y="176" class="pdu">Packet</text>
+
+  <!-- Data Link -->
+  <text x="20" y="226" class="lyr">Data Link</text>
+  <rect x="150" y="211" width="80" height="26" rx="3" fill="#1f3a5f"/>
+  <text x="190" y="228" text-anchor="middle" class="hdr">Eth hdr</text>
+  <rect x="230" y="211" width="70" height="26" rx="3" fill="#26557a"/>
+  <text x="265" y="228" text-anchor="middle" class="hdr">IP hdr</text>
+  <rect x="300" y="211" width="70" height="26" rx="3" fill="#2e7d8a"/>
+  <text x="335" y="228" text-anchor="middle" class="hdr">TCP hdr</text>
+  <rect x="370" y="211" width="180" height="26" rx="3" fill="#f2d492" stroke="#c98f1c"/>
+  <text x="460" y="228" text-anchor="middle" class="data">Data</text>
+  <rect x="550" y="211" width="55" height="26" rx="3" fill="#1f3a5f"/>
+  <text x="577" y="228" text-anchor="middle" class="hdr">FCS</text>
+  <text x="700" y="228" class="pdu">Frame</text>
+
+  <!-- Physical -->
+  <text x="20" y="278" class="lyr">Physical</text>
+  <rect x="150" y="263" width="455" height="26" rx="3" fill="#152a45"/>
+  <text x="377" y="280" text-anchor="middle" class="hdr">1 0 1 1 0 0 1 0 1 0 1 1 0 1 0 0 1 0 1 1 0 0 1 0 1 0 1 1 0 1 0 0</text>
+  <text x="700" y="280" class="pdu">Bits</text>
+
+  <!-- arrow -->
+  <line x1="115" y1="55" x2="115" y2="289" stroke="#4a5568" stroke-width="2" marker-end="url(#a)"/>
+  <defs><marker id="a" markerWidth="10" markerHeight="10" refX="5" refY="5" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#4a5568"/></marker></defs>
+  <text x="70" y="170" class="note" transform="rotate(90 70 170)">Enkapsulasi (turun)</text>
+
+  <text x="150" y="340" class="note">Di sisi penerima, proses dibalik: tiap layer melepas headernya sendiri = dekapsulasi.</text>
+  <text x="150" y="360" class="note">Prinsip: setiap layer hanya membaca headernya; payload layer atas diperlakukan sebagai data buram.</text>
+  <text x="150" y="410" class="note">Gambar orisinal (native) — bebas dikutip/diedit.</text>
+</svg>

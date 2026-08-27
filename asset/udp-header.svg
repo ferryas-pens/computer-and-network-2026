@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 250" font-family="Calibri, Arial, sans-serif">
+  <style>
+    .title{font-size:18px;font-weight:bold;fill:#12263a}
+    .bit{font-size:10px;fill:#4a5568}
+    .f{font-size:12px;fill:#fff}
+    .note{font-size:11px;fill:#4a5568}
+  </style>
+  <text x="360" y="24" text-anchor="middle" class="title">Header UDP (8 byte) — RFC 768</text>
+
+  <text x="60"  y="46" class="bit">0</text>
+  <text x="380" y="46" class="bit">16</text>
+  <text x="655" y="46" class="bit">31</text>
+
+  <g stroke="#12263a" stroke-width="1">
+    <rect x="60"  y="52" width="310" height="42" fill="#2e7d8a"/><text x="215" y="78" text-anchor="middle" class="f">Source Port (16)</text>
+    <rect x="370" y="52" width="310" height="42" fill="#26557a"/><text x="525" y="78" text-anchor="middle" class="f">Destination Port (16)</text>
+    <rect x="60"  y="94" width="310" height="42" fill="#e0a020"/><text x="215" y="120" text-anchor="middle" class="f" style="fill:#12263a">Length (16)</text>
+    <rect x="370" y="94" width="310" height="42" fill="#dbe5ef"/><text x="525" y="120" text-anchor="middle" class="f" style="fill:#12263a">Checksum (16)</text>
+  </g>
+
+  <text x="60" y="168" class="note" font-weight="bold">Bandingkan dengan TCP (20 byte, Gambar 9.1):</text>
+  <text x="60" y="188" class="note">• UDP hanya 8 byte: tak ada Sequence/Ack, tak ada Flags, tak ada Window → tanpa keandalan &amp; tanpa koneksi.</text>
+  <text x="60" y="206" class="note">• Konsekuensi: cepat &amp; ringan, tetapi tak ada jaminan sampai/urut. Cocok untuk data real-time (suara, video, game, DNS).</text>
+  <text x="60" y="224" class="note">• "Length" mencakup header + data; "Checksum" opsional di IPv4, wajib di IPv6.</text>
+  <text x="60" y="244" class="note" font-style="italic">Gambar orisinal (native) — bebas dikutip/diedit.</text>
+</svg>

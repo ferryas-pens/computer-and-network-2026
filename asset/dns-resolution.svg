@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 360" font-family="Calibri, Arial, sans-serif">
+  <style>
+    .title{font-size:18px;font-weight:bold;fill:#12263a}
+    .bx{font-size:12px;fill:#fff;font-weight:bold}
+    .sm{font-size:10px;fill:#e8eef5}
+    .step{font-size:11px;fill:#12263a}
+    .note{font-size:11px;fill:#4a5568}
+  </style>
+  <text x="380" y="24" text-anchor="middle" class="title">Resolusi DNS: mencari alamat IP dari nama domain</text>
+  <text x="380" y="44" text-anchor="middle" class="note" font-style="italic">Contoh: "www.pens.ac.id" → alamat IP</text>
+
+  <!-- client -->
+  <rect x="30" y="70" width="120" height="54" rx="6" fill="#1f3a5f"/><text x="90" y="94" text-anchor="middle" class="bx">Client</text><text x="90" y="112" text-anchor="middle" class="sm">(stub resolver)</text>
+  <!-- recursive -->
+  <rect x="300" y="70" width="150" height="54" rx="6" fill="#2e7d8a"/><text x="375" y="94" text-anchor="middle" class="bx">Recursive Resolver</text><text x="375" y="112" text-anchor="middle" class="sm">(mis. ISP / 8.8.8.8)</text>
+
+  <!-- server hierarchy -->
+  <rect x="600" y="60"  width="130" height="40" rx="6" fill="#26557a"/><text x="665" y="85" text-anchor="middle" class="bx">Root (.)</text>
+  <rect x="600" y="150" width="130" height="40" rx="6" fill="#26557a"/><text x="665" y="175" text-anchor="middle" class="bx">TLD (.id)</text>
+  <rect x="600" y="240" width="130" height="40" rx="6" fill="#e0a020"/><text x="665" y="258" text-anchor="middle" class="bx" style="fill:#12263a">Authoritative</text><text x="665" y="273" text-anchor="middle" class="step">(pens.ac.id)</text>
+
+  <!-- arrows client<->recursive -->
+  <line x1="150" y1="88" x2="296" y2="88" stroke="#1f3a5f" stroke-width="2" marker-end="url(#a)"/>
+  <text x="223" y="80" text-anchor="middle" class="step">1. query</text>
+  <line x1="296" y1="108" x2="150" y2="108" stroke="#b00020" stroke-width="2" marker-end="url(#r)"/>
+  <text x="223" y="124" text-anchor="middle" class="step" >8. jawaban: IP</text>
+
+  <!-- recursive to servers -->
+  <line x1="450" y1="84" x2="596" y2="80" stroke="#2e7d8a" stroke-width="2" marker-end="url(#a)"/>
+  <text x="520" y="66" text-anchor="middle" class="step">2 → 3</text>
+  <line x1="450" y1="96" x2="596" y2="168" stroke="#2e7d8a" stroke-width="2" marker-end="url(#a)"/>
+  <text x="505" y="150" text-anchor="middle" class="step">4 → 5</text>
+  <line x1="450" y1="104" x2="596" y2="255" stroke="#2e7d8a" stroke-width="2" marker-end="url(#a)"/>
+  <text x="495" y="230" text-anchor="middle" class="step">6 → 7</text>
+
+  <defs>
+    <marker id="a" markerWidth="9" markerHeight="9" refX="5" refY="4.5" orient="auto"><path d="M0,0 L9,4.5 L0,9 z" fill="#2e7d8a"/></marker>
+    <marker id="r" markerWidth="9" markerHeight="9" refX="5" refY="4.5" orient="auto"><path d="M0,0 L9,4.5 L0,9 z" fill="#b00020"/></marker>
+  </defs>
+
+  <text x="30" y="310" class="note" font-weight="bold">Alur (recursive + iterative):</text>
+  <text x="30" y="328" class="note">Root menunjuk ke server .id → .id menunjuk ke pens.ac.id → authoritative memberi IP final. Resolver menyimpan hasil (caching, TTL).</text>
+  <text x="30" y="346" class="note">DNS di atas UDP port 53; pindah ke TCP untuk respons besar. DNSSEC menandatangani; DoH/DoT/DoQ mengenkripsi query. <tspan font-style="italic">(gambar native)</tspan></text>
+</svg>

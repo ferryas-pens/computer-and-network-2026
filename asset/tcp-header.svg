@@ -1,0 +1,54 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 400" font-family="Calibri, Arial, sans-serif">
+  <style>
+    .title{font-size:18px;font-weight:bold;fill:#12263a}
+    .bit{font-size:10px;fill:#4a5568}
+    .f{font-size:12px;fill:#12263a}
+    .fw{font-size:12px;fill:#fff}
+    .fl{font-size:9px;fill:#fff;font-weight:bold}
+    .note{font-size:11px;fill:#4a5568}
+  </style>
+  <text x="360" y="24" text-anchor="middle" class="title">Header TCP (20 byte tanpa opsi) — RFC 9293</text>
+
+  <text x="60"  y="46" class="bit">0</text>
+  <text x="380" y="46" class="bit">16</text>
+  <text x="655" y="46" class="bit">31</text>
+
+  <!-- Row1: ports -->
+  <g stroke="#12263a" stroke-width="1">
+    <rect x="60"  y="52" width="310" height="40" fill="#2e7d8a"/><text x="215" y="77" text-anchor="middle" class="fw">Source Port (16)</text>
+    <rect x="370" y="52" width="310" height="40" fill="#26557a"/><text x="525" y="77" text-anchor="middle" class="fw">Destination Port (16)</text>
+  </g>
+  <!-- Row2: seq -->
+  <g stroke="#12263a" stroke-width="1">
+    <rect x="60" y="92" width="620" height="40" fill="#1f3a5f"/><text x="370" y="117" text-anchor="middle" class="fw">Sequence Number (32)</text>
+  </g>
+  <!-- Row3: ack -->
+  <g stroke="#12263a" stroke-width="1">
+    <rect x="60" y="132" width="620" height="40" fill="#152a45"/><text x="370" y="157" text-anchor="middle" class="fw">Acknowledgment Number (32)</text>
+  </g>
+  <!-- Row4: offset/flags/window -->
+  <g stroke="#12263a" stroke-width="1">
+    <rect x="60"  y="172" width="70"  height="40" fill="#e0a020"/><text x="95"  y="191" text-anchor="middle" class="f" font-size="10">Data</text><text x="95" y="203" text-anchor="middle" class="f" font-size="10">Offset</text>
+    <rect x="130" y="172" width="60"  height="40" fill="#dbe5ef"/><text x="160" y="196" text-anchor="middle" class="f" font-size="10">Rsvd</text>
+    <!-- flags -->
+    <rect x="190" y="172" width="180" height="40" fill="#b00020"/>
+    <text x="280" y="188" text-anchor="middle" class="fl">Flags (control bits)</text>
+    <text x="280" y="204" text-anchor="middle" class="fl">URG ACK PSH RST SYN FIN</text>
+    <rect x="370" y="172" width="310" height="40" fill="#f2d492"/><text x="525" y="197" text-anchor="middle" class="f">Window Size (16)</text>
+  </g>
+  <!-- Row5: checksum/urg -->
+  <g stroke="#12263a" stroke-width="1">
+    <rect x="60"  y="212" width="310" height="40" fill="#dbe5ef"/><text x="215" y="237" text-anchor="middle" class="f">Checksum (16)</text>
+    <rect x="370" y="212" width="310" height="40" fill="#dbe5ef"/><text x="525" y="237" text-anchor="middle" class="f">Urgent Pointer (16)</text>
+  </g>
+  <!-- Options -->
+  <g stroke="#12263a" stroke-width="1" stroke-dasharray="4">
+    <rect x="60" y="252" width="620" height="30" fill="#f4f6f8"/><text x="370" y="272" text-anchor="middle" class="f" font-style="italic">Options + Padding (mis. MSS, Window Scale, SACK, Timestamp)</text>
+  </g>
+
+  <text x="60" y="310" class="note" font-weight="bold">Field kunci:</text>
+  <text x="60" y="328" class="note">• Port: mengidentifikasi aplikasi (mis. 80=HTTP, 443=HTTPS). • Sequence/Ack: menjamin urutan &amp; keandalan.</text>
+  <text x="60" y="346" class="note">• Flags: SYN (buka koneksi), ACK (konfirmasi), FIN (tutup), RST (reset). • Window Size: kontrol aliran (flow control).</text>
+  <text x="60" y="364" class="note">• Checksum: deteksi error. Header minimal 20 byte (Data Offset = 5 × 4 byte).</text>
+  <text x="60" y="388" class="note" font-style="italic">Gambar orisinal (native) — bebas dikutip/diedit.</text>
+</svg>

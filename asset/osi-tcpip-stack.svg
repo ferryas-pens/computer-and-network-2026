@@ -1,0 +1,78 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 520" font-family="Calibri, Arial, sans-serif">
+  <style>
+    .title{font-size:20px;font-weight:bold;fill:#12263a}
+    .col{font-size:15px;font-weight:bold;fill:#12263a}
+    .lyr{font-size:14px;fill:#ffffff;font-weight:bold}
+    .sub{font-size:11px;fill:#e8eef5}
+    .pdu{font-size:12px;font-style:italic;fill:#12263a}
+    .note{font-size:11px;fill:#4a5568}
+  </style>
+
+  <text x="380" y="30" text-anchor="middle" class="title">Model OSI (7 layer) vs TCP/IP (praktis)</text>
+
+  <!-- Column headers -->
+  <text x="150" y="62" text-anchor="middle" class="col">OSI</text>
+  <text x="430" y="62" text-anchor="middle" class="col">TCP/IP</text>
+  <text x="650" y="62" text-anchor="middle" class="col">PDU</text>
+
+  <!-- OSI 7 layers -->
+  <g>
+    <rect x="40" y="72" width="220" height="48" rx="4" fill="#e0a020"/>
+    <text x="150" y="94" text-anchor="middle" class="lyr">7 · Application</text>
+    <text x="150" y="111" text-anchor="middle" class="sub">HTTP, DNS, SMTP, FTP</text>
+
+    <rect x="40" y="124" width="220" height="48" rx="4" fill="#d99a1e"/>
+    <text x="150" y="146" text-anchor="middle" class="lyr">6 · Presentation</text>
+    <text x="150" y="163" text-anchor="middle" class="sub">enkripsi, kompresi, TLS*</text>
+
+    <rect x="40" y="176" width="220" height="48" rx="4" fill="#c98f1c"/>
+    <text x="150" y="198" text-anchor="middle" class="lyr">5 · Session</text>
+    <text x="150" y="215" text-anchor="middle" class="sub">dialog, sinkronisasi</text>
+
+    <rect x="40" y="228" width="220" height="48" rx="4" fill="#2e7d8a"/>
+    <text x="150" y="250" text-anchor="middle" class="lyr">4 · Transport</text>
+    <text x="150" y="267" text-anchor="middle" class="sub">TCP, UDP · port</text>
+
+    <rect x="40" y="280" width="220" height="48" rx="4" fill="#26557a"/>
+    <text x="150" y="302" text-anchor="middle" class="lyr">3 · Network</text>
+    <text x="150" y="319" text-anchor="middle" class="sub">IP, ICMP · routing</text>
+
+    <rect x="40" y="332" width="220" height="48" rx="4" fill="#1f3a5f"/>
+    <text x="150" y="354" text-anchor="middle" class="lyr">2 · Data Link</text>
+    <text x="150" y="371" text-anchor="middle" class="sub">Ethernet, MAC, ARP</text>
+
+    <rect x="40" y="384" width="220" height="48" rx="4" fill="#152a45"/>
+    <text x="150" y="406" text-anchor="middle" class="lyr">1 · Physical</text>
+    <text x="150" y="423" text-anchor="middle" class="sub">kabel, sinyal, konektor</text>
+  </g>
+
+  <!-- TCP/IP layers (mapped) -->
+  <g>
+    <rect x="320" y="72" width="220" height="152" rx="4" fill="#e0a020"/>
+    <text x="430" y="140" text-anchor="middle" class="lyr">Application</text>
+    <text x="430" y="160" text-anchor="middle" class="sub">HTTP/3, DNS, SMTP, TLS</text>
+
+    <rect x="320" y="228" width="220" height="48" rx="4" fill="#2e7d8a"/>
+    <text x="430" y="256" text-anchor="middle" class="lyr">Transport</text>
+
+    <rect x="320" y="280" width="220" height="48" rx="4" fill="#26557a"/>
+    <text x="430" y="308" text-anchor="middle" class="lyr">Internet</text>
+
+    <rect x="320" y="332" width="220" height="100" rx="4" fill="#1f3a5f"/>
+    <text x="430" y="388" text-anchor="middle" class="lyr">Network Access</text>
+    <text x="430" y="408" text-anchor="middle" class="sub">(Link + Physical)</text>
+  </g>
+
+  <!-- PDU labels -->
+  <text x="650" y="152" text-anchor="middle" class="pdu">Data / Message</text>
+  <text x="650" y="256" text-anchor="middle" class="pdu">Segment (TCP)</text>
+  <text x="650" y="272" text-anchor="middle" class="pdu">Datagram (UDP)</text>
+  <text x="650" y="308" text-anchor="middle" class="pdu">Packet / Datagram</text>
+  <text x="650" y="372" text-anchor="middle" class="pdu">Frame</text>
+  <text x="650" y="418" text-anchor="middle" class="pdu">Bits</text>
+
+  <!-- footnote -->
+  <text x="40" y="470" class="note">* TLS secara praktik berada di antara Transport dan Application; OSI menaruh fungsi enkripsi di Presentation.</text>
+  <text x="40" y="490" class="note">Model TCP/IP menggabungkan OSI 5–7 menjadi "Application" dan OSI 1–2 menjadi "Network Access".</text>
+  <text x="40" y="510" class="note">Gambar orisinal (native) — bebas dikutip/diedit. Bukan salinan dari buku ber-hak cipta.</text>
+</svg>

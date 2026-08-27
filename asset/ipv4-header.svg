@@ -1,0 +1,56 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 400" font-family="Calibri, Arial, sans-serif">
+  <style>
+    .title{font-size:18px;font-weight:bold;fill:#12263a}
+    .bit{font-size:10px;fill:#4a5568}
+    .f{font-size:12px;fill:#12263a}
+    .fw{font-size:12px;fill:#fff}
+    .note{font-size:11px;fill:#4a5568}
+  </style>
+  <text x="360" y="24" text-anchor="middle" class="title">Header IPv4 (20 byte tanpa opsi) — RFC 791</text>
+
+  <!-- bit ruler -->
+  <text x="60"  y="46" class="bit">0</text>
+  <text x="220" y="46" class="bit">8</text>
+  <text x="380" y="46" class="bit">16</text>
+  <text x="540" y="46" class="bit">24</text>
+  <text x="655" y="46" class="bit">31</text>
+
+  <!-- grid: each row 32 bits = 620px wide starting x=60 -->
+  <!-- Row 1 -->
+  <g stroke="#12263a" stroke-width="1">
+    <rect x="60"  y="52" width="77"  height="40" fill="#26557a"/><text x="98"  y="77" text-anchor="middle" class="fw">Ver</text>
+    <rect x="137" y="52" width="78"  height="40" fill="#2e7d8a"/><text x="176" y="77" text-anchor="middle" class="fw">IHL</text>
+    <rect x="215" y="52" width="155" height="40" fill="#dbe5ef"/><text x="292" y="77" text-anchor="middle" class="f">DSCP / ECN</text>
+    <rect x="370" y="52" width="310" height="40" fill="#f2d492"/><text x="525" y="77" text-anchor="middle" class="f">Total Length</text>
+  </g>
+  <!-- Row 2 -->
+  <g stroke="#12263a" stroke-width="1">
+    <rect x="60"  y="92" width="310" height="40" fill="#dbe5ef"/><text x="215" y="117" text-anchor="middle" class="f">Identification</text>
+    <rect x="370" y="92" width="80"  height="40" fill="#2e7d8a"/><text x="410" y="117" text-anchor="middle" class="fw">Flags</text>
+    <rect x="450" y="92" width="230" height="40" fill="#f2d492"/><text x="565" y="117" text-anchor="middle" class="f">Fragment Offset</text>
+  </g>
+  <!-- Row 3 -->
+  <g stroke="#12263a" stroke-width="1">
+    <rect x="60"  y="132" width="155" height="40" fill="#e0a020"/><text x="137" y="157" text-anchor="middle" class="f">TTL</text>
+    <rect x="215" y="132" width="155" height="40" fill="#e0a020"/><text x="292" y="157" text-anchor="middle" class="f">Protocol</text>
+    <rect x="370" y="132" width="310" height="40" fill="#dbe5ef"/><text x="525" y="157" text-anchor="middle" class="f">Header Checksum</text>
+  </g>
+  <!-- Row 4 -->
+  <g stroke="#12263a" stroke-width="1">
+    <rect x="60" y="172" width="620" height="40" fill="#1f3a5f"/><text x="370" y="197" text-anchor="middle" class="fw">Source Address (32 bit)</text>
+  </g>
+  <!-- Row 5 -->
+  <g stroke="#12263a" stroke-width="1">
+    <rect x="60" y="212" width="620" height="40" fill="#152a45"/><text x="370" y="237" text-anchor="middle" class="fw">Destination Address (32 bit)</text>
+  </g>
+  <!-- Options -->
+  <g stroke="#12263a" stroke-width="1" stroke-dasharray="4">
+    <rect x="60" y="252" width="620" height="30" fill="#f4f6f8"/><text x="370" y="272" text-anchor="middle" class="f" font-style="italic">Options + Padding (opsional, jika IHL &gt; 5)</text>
+  </g>
+
+  <text x="60" y="310" class="note" font-weight="bold">Field penting:</text>
+  <text x="60" y="328" class="note">• TTL: dikurangi 1 tiap hop router; jika 0, paket dibuang (cegah loop). • Protocol: 6=TCP, 17=UDP, 1=ICMP.</text>
+  <text x="60" y="346" class="note">• Total Length maks 65.535 byte. • Fragmentation dipandu Flags + Fragment Offset (IPv6 menghapus fitur ini).</text>
+  <text x="60" y="364" class="note">• Alamat 32 bit → ±4,3 miliar alamat (habis) → alasan IPv6 (128 bit).</text>
+  <text x="60" y="388" class="note" font-style="italic">Gambar orisinal (native) — bebas dikutip/diedit.</text>
+</svg>
