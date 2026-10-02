@@ -1,0 +1,588 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Media pembelajaran interaktif tentang hubungan sinyal, bandwidth, kapasitas kanal, throughput, goodput, delay, RTT, jitter, packet loss, dan availability.">
+  <title>Metrik Kinerja Jaringan dalam Konteks Sinyal</title>
+  <style>
+    :root {
+      color-scheme: light dark;
+      --bg: #f5f7fb;
+      --surface: #ffffff;
+      --surface-2: #eef3fa;
+      --text: #172033;
+      --muted: #58657a;
+      --line: #d8e0ec;
+      --blue: #1769e0;
+      --cyan: #008ba3;
+      --green: #16825d;
+      --orange: #c16408;
+      --red: #bd2c35;
+      --purple: #7048c6;
+      --shadow: 0 18px 50px rgba(25, 45, 80, 0.10);
+    }
+
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #0e1420;
+        --surface: #161f2e;
+        --surface-2: #202b3d;
+        --text: #edf2fb;
+        --muted: #afbdd0;
+        --line: #344158;
+        --blue: #6ea8ff;
+        --cyan: #55c9db;
+        --green: #59c79a;
+        --orange: #ffb55f;
+        --red: #ff7c87;
+        --purple: #b49aff;
+        --shadow: 0 18px 50px rgba(0, 0, 0, 0.28);
+      }
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      background:
+        radial-gradient(circle at 10% 0%, color-mix(in srgb, var(--blue) 10%, transparent), transparent 32rem),
+        var(--bg);
+      color: var(--text);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height: 1.55;
+    }
+    button, input { font: inherit; }
+    button:focus-visible, input:focus-visible {
+      outline: 3px solid color-mix(in srgb, var(--blue) 45%, transparent);
+      outline-offset: 2px;
+    }
+    .page { width: min(1180px, calc(100% - 32px)); margin: 0 auto; }
+    header { padding: 48px 0 24px; }
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--blue);
+      font-size: 0.82rem;
+      font-weight: 750;
+      letter-spacing: 0.09em;
+      text-transform: uppercase;
+    }
+    .eyebrow::before { content: ""; width: 24px; height: 3px; background: var(--blue); border-radius: 9px; }
+    h1 { margin: 10px 0 10px; max-width: 920px; font-size: clamp(2rem, 5vw, 4rem); line-height: 1.07; letter-spacing: -0.045em; }
+    .lead { max-width: 850px; margin: 0; color: var(--muted); font-size: clamp(1rem, 2vw, 1.2rem); }
+    .critical-note {
+      margin-top: 24px;
+      padding: 18px 20px;
+      border-left: 5px solid var(--orange);
+      background: color-mix(in srgb, var(--orange) 9%, var(--surface));
+      border-radius: 0 14px 14px 0;
+    }
+    .critical-note strong { color: var(--orange); }
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      border-block: 1px solid var(--line);
+      background: color-mix(in srgb, var(--bg) 88%, transparent);
+      backdrop-filter: blur(14px);
+    }
+    .nav-inner { display: flex; gap: 8px; padding: 10px 0; overflow-x: auto; }
+    .nav-inner a {
+      flex: 0 0 auto;
+      color: var(--muted);
+      text-decoration: none;
+      padding: 8px 12px;
+      border-radius: 9px;
+      font-size: 0.9rem;
+      font-weight: 650;
+    }
+    .nav-inner a:hover { background: var(--surface-2); color: var(--text); }
+    main { padding: 24px 0 64px; }
+    section { scroll-margin-top: 72px; margin-top: 30px; }
+    .section-head { display: flex; justify-content: space-between; gap: 20px; align-items: end; margin-bottom: 14px; }
+    .section-head h2 { margin: 0; font-size: clamp(1.45rem, 3vw, 2rem); letter-spacing: -0.025em; }
+    .section-head p { margin: 0; max-width: 620px; color: var(--muted); }
+    .card { background: var(--surface); border: 1px solid var(--line); border-radius: 18px; box-shadow: var(--shadow); }
+
+    .signal-chain { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; }
+    .stage { position: relative; padding: 18px; min-width: 0; overflow: hidden; }
+    .stage::after {
+      content: "→";
+      position: absolute;
+      right: -11px;
+      top: 24px;
+      width: 22px;
+      height: 22px;
+      display: grid;
+      place-items: center;
+      border-radius: 50%;
+      background: var(--blue);
+      color: white;
+      font-weight: 800;
+      z-index: 2;
+    }
+    .stage:last-child::after { display: none; }
+    .stage-number { color: var(--blue); font-weight: 800; font-size: 0.78rem; letter-spacing: 0.08em; text-transform: uppercase; }
+    .stage h3 { margin: 5px 0 4px; }
+    .stage > p { color: var(--muted); margin: 0 0 12px; font-size: 0.9rem; min-height: 44px; }
+    .mini-svg { width: 100%; height: 100px; display: block; color: var(--blue); }
+    .mini-svg .axis { stroke: var(--line); stroke-width: 1; }
+    .mini-svg .primary { fill: none; stroke: currentColor; stroke-width: 2.5; }
+    .mini-svg .secondary { fill: none; stroke: var(--orange); stroke-width: 1.5; }
+    .mini-svg text { fill: var(--muted); font-size: 10px; }
+    .tag-row { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 10px; }
+    .tag { padding: 4px 8px; border-radius: 999px; background: var(--surface-2); color: var(--muted); font-size: 0.76rem; font-weight: 700; }
+
+    .inspector-layout { display: grid; grid-template-columns: 0.88fr 1.25fr; gap: 14px; }
+    .metric-buttons { padding: 14px; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; align-content: start; }
+    .metric-button {
+      border: 1px solid var(--line);
+      background: transparent;
+      color: var(--text);
+      text-align: left;
+      padding: 12px;
+      min-height: 66px;
+      border-radius: 12px;
+      cursor: pointer;
+      transition: 160ms ease;
+    }
+    .metric-button:hover { transform: translateY(-1px); border-color: var(--blue); }
+    .metric-button[aria-pressed="true"] { background: var(--blue); color: white; border-color: var(--blue); }
+    .metric-button strong, .metric-button span { display: block; }
+    .metric-button span { margin-top: 3px; opacity: 0.78; font-size: 0.78rem; }
+    .metric-detail { padding: 24px; display: grid; grid-template-columns: 1.05fr 0.95fr; gap: 22px; }
+    .metric-kicker { color: var(--blue); font-weight: 750; font-size: 0.82rem; text-transform: uppercase; letter-spacing: 0.07em; }
+    .metric-detail h3 { margin: 4px 0 5px; font-size: 1.7rem; }
+    .unit { display: inline-block; padding: 5px 9px; border-radius: 8px; background: var(--surface-2); font-size: 0.8rem; font-weight: 750; }
+    .metric-detail p { color: var(--muted); }
+    .fact-list { margin: 0; padding: 0; list-style: none; }
+    .fact-list li { padding: 10px 0; border-bottom: 1px solid var(--line); }
+    .fact-list li:last-child { border-bottom: 0; }
+    .fact-list strong { display: block; margin-bottom: 2px; font-size: 0.82rem; color: var(--text); }
+    .fact-list span { color: var(--muted); }
+
+    .simulator { padding: 22px; }
+    .sim-grid { display: grid; grid-template-columns: 0.9fr 1.1fr; gap: 24px; }
+    .controls { display: grid; gap: 15px; }
+    .control-head { display: flex; justify-content: space-between; gap: 12px; align-items: baseline; }
+    .control-head label { font-weight: 700; }
+    .control-head output { color: var(--blue); font-weight: 800; font-variant-numeric: tabular-nums; }
+    input[type="range"] { width: 100%; accent-color: var(--blue); }
+    .control-help { margin: -8px 0 0; color: var(--muted); font-size: 0.78rem; }
+    .results { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+    .result { padding: 15px; border-radius: 14px; background: var(--surface-2); }
+    .result span { display: block; color: var(--muted); font-size: 0.78rem; font-weight: 700; }
+    .result strong { display: block; margin-top: 4px; font-size: clamp(1.25rem, 3vw, 1.8rem); font-variant-numeric: tabular-nums; }
+    .result.capacity strong { color: var(--purple); }
+    .result.throughput strong { color: var(--blue); }
+    .result.goodput strong { color: var(--green); }
+    .result.availability strong { color: var(--orange); }
+    .bars { margin-top: 16px; display: grid; gap: 10px; }
+    .bar-row { display: grid; grid-template-columns: 92px 1fr 86px; gap: 10px; align-items: center; font-size: 0.82rem; }
+    .track { height: 12px; border-radius: 99px; background: var(--surface-2); overflow: hidden; }
+    .bar { height: 100%; border-radius: inherit; transition: width 220ms ease; }
+    .bar.capacity { background: var(--purple); }
+    .bar.throughput { background: var(--blue); }
+    .bar.goodput { background: var(--green); }
+    .bar-value { text-align: right; font-variant-numeric: tabular-nums; }
+    .formula-note { margin: 18px 0 0; padding: 13px; border-radius: 12px; background: color-mix(in srgb, var(--blue) 7%, var(--surface)); color: var(--muted); font-size: 0.82rem; }
+    code { color: var(--text); font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
+
+    .bridge-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
+    .bridge { padding: 20px; border-top: 5px solid var(--cyan); }
+    .bridge:nth-child(2) { border-top-color: var(--red); }
+    .bridge:nth-child(3) { border-top-color: var(--green); }
+    .bridge h3 { margin: 0 0 6px; }
+    .bridge p { margin: 0; color: var(--muted); }
+
+    .table-wrap { overflow-x: auto; border-radius: 18px; }
+    table { width: 100%; border-collapse: collapse; min-width: 780px; background: var(--surface); }
+    th, td { padding: 13px 14px; text-align: left; border-bottom: 1px solid var(--line); vertical-align: top; }
+    th { color: var(--muted); background: var(--surface-2); font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.04em; }
+    tbody tr:hover { background: color-mix(in srgb, var(--blue) 5%, transparent); }
+    tbody tr:last-child td { border-bottom: 0; }
+    .domain { font-weight: 750; color: var(--blue); }
+
+    .relationships { padding: 22px; }
+    .equation { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 9px; font-weight: 800; font-size: clamp(1rem, 2.5vw, 1.35rem); }
+    .equation .node { padding: 9px 12px; border-radius: 10px; background: var(--surface-2); }
+    .equation .operator { color: var(--muted); }
+    .explain-grid { margin-top: 18px; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
+    .explain-grid div { padding-top: 12px; border-top: 1px solid var(--line); color: var(--muted); }
+    footer { padding: 24px 0 40px; color: var(--muted); font-size: 0.82rem; border-top: 1px solid var(--line); }
+
+    @media (max-width: 920px) {
+      .signal-chain { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .stage:nth-child(2)::after { display: none; }
+      .inspector-layout, .sim-grid { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 680px) {
+      .page { width: min(100% - 20px, 1180px); }
+      header { padding-top: 30px; }
+      .signal-chain, .bridge-grid, .explain-grid, .metric-detail { grid-template-columns: 1fr; }
+      .stage::after { display: none; }
+      .section-head { display: block; }
+      .section-head p { margin-top: 5px; }
+      .results { grid-template-columns: 1fr 1fr; }
+    }
+    @media (max-width: 430px) {
+      .metric-buttons, .results { grid-template-columns: 1fr; }
+      .bar-row { grid-template-columns: 76px 1fr; }
+      .bar-value { grid-column: 2; text-align: left; margin-top: -7px; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      * { scroll-behavior: auto !important; transition: none !important; }
+    }
+  </style>
+</head>
+<body>
+  <header class="page">
+    <span class="eyebrow">Media pembelajaran interaktif</span>
+    <h1>Metrik Kinerja Jaringan dalam Konteks Sinyal</h1>
+    <p class="lead">Menelusuri hubungan dari pita frekuensi dan kualitas sinyal, menuju kapasitas kanal, laju data aktual, kualitas waktu, kehilangan paket, dan ketersediaan layanan.</p>
+    <div class="critical-note">
+      <strong>Pembedaan mendasar:</strong> bandwidth dalam teori sinyal adalah lebar pita frekuensi dan lazim diukur dalam <strong>Hz</strong>. Istilah “bandwidth” dalam percakapan jaringan sering dipakai secara longgar untuk kapasitas link dalam <strong>bps</strong>. Keduanya berkaitan, tetapi bukan besaran yang sama.
+    </div>
+  </header>
+
+  <nav aria-label="Navigasi halaman">
+    <div class="page nav-inner">
+      <a href="#alur">Alur sinyal</a>
+      <a href="#inspektor">Inspektor metrik</a>
+      <a href="#simulator">Simulator</a>
+      <a href="#jembatan">SNR–BER–paket</a>
+      <a href="#ringkasan">Tabel ringkas</a>
+    </div>
+  </nav>
+
+  <main class="page">
+    <section id="alur">
+      <div class="section-head">
+        <div><h2>Dari gelombang hingga pengalaman pengguna</h2></div>
+        <p>Setiap tahap memiliki metrik berbeda. Satu angka “kecepatan” tidak cukup untuk menjelaskan mutu jaringan secara utuh.</p>
+      </div>
+      <div class="signal-chain">
+        <article class="card stage">
+          <span class="stage-number">Tahap 1</span><h3>Kanal fisik</h3>
+          <p>Spektrum, medium, daya sinyal, noise, dan batas teoritis.</p>
+          <svg class="mini-svg" viewBox="0 0 230 100" role="img" aria-label="Ilustrasi spektrum sinyal">
+            <line class="axis" x1="10" y1="82" x2="220" y2="82"></line>
+            <path class="primary" d="M15 80 C38 80 42 22 68 22 C94 22 98 80 120 80 C143 80 146 37 171 37 C196 37 200 80 215 80"></path>
+            <text x="10" y="96">frekuensi →</text>
+          </svg>
+          <div class="tag-row"><span class="tag">Bandwidth: Hz</span><span class="tag">SNR: dB</span><span class="tag">Kapasitas: bps</span></div>
+        </article>
+        <article class="card stage">
+          <span class="stage-number">Tahap 2</span><h3>Transmisi</h3>
+          <p>Sinyal merambat, mengalami redaman, noise, antrean, dan akses media.</p>
+          <svg class="mini-svg" viewBox="0 0 230 100" role="img" aria-label="Ilustrasi sinyal dan noise">
+            <line class="axis" x1="10" y1="50" x2="220" y2="50"></line>
+            <path class="primary" d="M10 50 C24 15 38 15 52 50 S80 85 94 50 S122 15 136 50 S164 85 178 50 S206 15 220 50"></path>
+            <path class="secondary" d="M10 55 L23 42 L36 58 L49 39 L62 61 L75 45 L88 53 L101 38 L114 57 L127 43 L140 60 L153 40 L166 55 L179 36 L192 59 L205 42 L220 54"></path>
+          </svg>
+          <div class="tag-row"><span class="tag">Throughput</span><span class="tag">Delay</span><span class="tag">Jitter</span></div>
+        </article>
+        <article class="card stage">
+          <span class="stage-number">Tahap 3</span><h3>Penerima</h3>
+          <p>Gelombang dideteksi menjadi simbol, bit, frame, lalu paket.</p>
+          <svg class="mini-svg" viewBox="0 0 230 100" role="img" aria-label="Ilustrasi keputusan bit digital">
+            <line class="axis" x1="10" y1="82" x2="220" y2="82"></line>
+            <path class="primary" d="M10 73 L10 28 L50 28 L50 73 L90 73 L90 28 L130 28 L130 73 L170 73 L170 28 L210 28 L210 73 L220 73"></path>
+            <text x="26" y="22">1</text><text x="66" y="66">0</text><text x="106" y="22">1</text><text x="146" y="66">0</text><text x="186" y="22">1</text>
+          </svg>
+          <div class="tag-row"><span class="tag">BER</span><span class="tag">Packet loss</span><span class="tag">RTT</span></div>
+        </article>
+        <article class="card stage">
+          <span class="stage-number">Tahap 4</span><h3>Aplikasi</h3>
+          <p>Payload yang berguna dipisahkan dari overhead dan retransmisi.</p>
+          <svg class="mini-svg" viewBox="0 0 230 100" role="img" aria-label="Ilustrasi payload, header, dan retransmisi">
+            <rect x="12" y="31" width="35" height="40" rx="4" fill="var(--surface-2)"></rect>
+            <rect x="51" y="31" width="125" height="40" rx="4" fill="var(--green)"></rect>
+            <rect x="180" y="31" width="38" height="40" rx="4" fill="color-mix(in srgb, var(--orange) 35%, var(--surface-2))"></rect>
+            <text x="22" y="55">H</text><text x="92" y="55" style="fill:white">payload</text><text x="185" y="55">retry</text>
+          </svg>
+          <div class="tag-row"><span class="tag">Goodput</span><span class="tag">Availability</span><span class="tag">QoE</span></div>
+        </article>
+      </div>
+    </section>
+
+    <section id="inspektor">
+      <div class="section-head">
+        <div><h2>Inspektor metrik</h2></div>
+        <p>Pilih metrik untuk melihat definisi, satuan, hubungan dengan sinyal, cara pengukuran, dan miskonsepsi yang perlu dihindari.</p>
+      </div>
+      <div class="inspector-layout">
+        <div class="card metric-buttons" id="metricButtons" aria-label="Daftar metrik">
+          <button class="metric-button" data-key="bandwidth" aria-pressed="true"><strong>Bandwidth sinyal</strong><span>Hz · domain fisik</span></button>
+          <button class="metric-button" data-key="capacity" aria-pressed="false"><strong>Kapasitas kanal</strong><span>bps · batas teoretis</span></button>
+          <button class="metric-button" data-key="throughput" aria-pressed="false"><strong>Throughput</strong><span>bps · laju aktual</span></button>
+          <button class="metric-button" data-key="goodput" aria-pressed="false"><strong>Goodput</strong><span>bps · payload berguna</span></button>
+          <button class="metric-button" data-key="delay" aria-pressed="false"><strong>Delay / latency</strong><span>ms · satu arah</span></button>
+          <button class="metric-button" data-key="rtt" aria-pressed="false"><strong>RTT</strong><span>ms · pergi–pulang</span></button>
+          <button class="metric-button" data-key="jitter" aria-pressed="false"><strong>Jitter</strong><span>ms · variasi delay</span></button>
+          <button class="metric-button" data-key="loss" aria-pressed="false"><strong>Packet loss</strong><span>% · paket tidak tiba</span></button>
+          <button class="metric-button" data-key="availability" aria-pressed="false"><strong>Availability</strong><span>% · layanan tersedia</span></button>
+        </div>
+        <article class="card metric-detail" aria-live="polite">
+          <div>
+            <span class="metric-kicker" id="metricDomain">Domain fisik</span>
+            <h3 id="metricTitle">Bandwidth sinyal</h3>
+            <span class="unit" id="metricUnit">Hz, kHz, MHz, GHz</span>
+            <p id="metricMeaning">Rentang frekuensi yang ditempati sinyal atau dilewatkan kanal, yakni selisih antara frekuensi batas atas dan batas bawah.</p>
+            <p><strong>Pertanyaan:</strong> <span id="metricQuestion">Seberapa lebar spektrum frekuensi yang tersedia atau digunakan?</span></p>
+          </div>
+          <ul class="fact-list">
+            <li><strong>Hubungan dengan sinyal</strong><span id="metricRelation">Bandwidth yang lebih lebar dapat meningkatkan kapasitas, tetapi hasilnya juga bergantung pada SNR, modulasi, dan coding.</span></li>
+            <li><strong>Diukur dengan</strong><span id="metricMeasure">Spectrum analyzer, occupied bandwidth, atau spesifikasi kanal.</span></li>
+            <li><strong>Miskonsepsi umum</strong><span id="metricPitfall">MHz tidak sama dengan Mbps. Keduanya terkait, tetapi tidak dapat dipertukarkan.</span></li>
+          </ul>
+        </article>
+      </div>
+    </section>
+
+    <section id="simulator">
+      <div class="section-head">
+        <div><h2>Simulator hubungan kanal–data</h2></div>
+        <p>Model pendidikan ini menunjukkan arah hubungan antarbesaran. Nilainya bukan prediksi perangkat produksi.</p>
+      </div>
+      <div class="card simulator">
+        <div class="sim-grid">
+          <div class="controls">
+            <div>
+              <div class="control-head"><label for="bw">Bandwidth kanal</label><output id="bwOut">20 MHz</output></div>
+              <input id="bw" type="range" min="1" max="100" value="20" step="1">
+              <p class="control-help">Lebar pita frekuensi B pada model Shannon.</p>
+            </div>
+            <div>
+              <div class="control-head"><label for="snr">SNR</label><output id="snrOut">20 dB</output></div>
+              <input id="snr" type="range" min="-5" max="40" value="20" step="1">
+              <p class="control-help">SNR dB dikonversi menjadi rasio linear untuk perhitungan.</p>
+            </div>
+            <div>
+              <div class="control-head"><label for="efficiency">Efisiensi implementasi</label><output id="efficiencyOut">70%</output></div>
+              <input id="efficiency" type="range" min="10" max="95" value="70" step="1">
+              <p class="control-help">Mewakili overhead akses media, coding, protokol, dan keterbatasan implementasi.</p>
+            </div>
+            <div>
+              <div class="control-head"><label for="overhead">Overhead aplikasi–protokol</label><output id="overheadOut">8%</output></div>
+              <input id="overhead" type="range" min="0" max="40" value="8" step="1">
+            </div>
+            <div>
+              <div class="control-head"><label for="loss">Packet loss</label><output id="lossOut">1.0%</output></div>
+              <input id="loss" type="range" min="0" max="20" value="1" step="0.5">
+            </div>
+            <div>
+              <div class="control-head"><label for="downtime">Downtime per bulan</label><output id="downtimeOut">43 menit</output></div>
+              <input id="downtime" type="range" min="0" max="1440" value="43" step="1">
+            </div>
+          </div>
+          <div>
+            <div class="results" aria-live="polite">
+              <div class="result capacity"><span>Kapasitas Shannon</span><strong id="capacityResult">133.2 Mbps</strong></div>
+              <div class="result throughput"><span>Throughput model</span><strong id="throughputResult">93.2 Mbps</strong></div>
+              <div class="result goodput"><span>Goodput model</span><strong id="goodputResult">84.9 Mbps</strong></div>
+              <div class="result availability"><span>Availability bulanan</span><strong id="availabilityResult">99.900%</strong></div>
+            </div>
+            <div class="bars" aria-label="Perbandingan kapasitas, throughput, dan goodput">
+              <div class="bar-row"><span>Kapasitas</span><div class="track"><div class="bar capacity" id="capacityBar" style="width:100%"></div></div><span class="bar-value" id="capacityBarValue">133.2 Mbps</span></div>
+              <div class="bar-row"><span>Throughput</span><div class="track"><div class="bar throughput" id="throughputBar" style="width:70%"></div></div><span class="bar-value" id="throughputBarValue">93.2 Mbps</span></div>
+              <div class="bar-row"><span>Goodput</span><div class="track"><div class="bar goodput" id="goodputBar" style="width:64%"></div></div><span class="bar-value" id="goodputBarValue">84.9 Mbps</span></div>
+            </div>
+            <div class="formula-note">
+              <strong>Model:</strong> <code>C = B log₂(1 + SNR)</code>; throughput = C × efisiensi; goodput = throughput × (1 − overhead) × (1 − loss). Availability dihitung dari proporsi waktu layanan tersedia dalam bulan 30 hari. Efek loss nyata terhadap goodput dapat lebih kompleks karena bergantung pada protokol dan pola retransmisi.
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="jembatan">
+      <div class="section-head">
+        <div><h2>Jembatan dari sinyal ke paket</h2></div>
+        <p>SNR, BER, serta modulasi dan coding menjelaskan mengapa kondisi gelombang dapat memengaruhi kinerja jaringan.</p>
+      </div>
+      <div class="bridge-grid">
+        <article class="card bridge"><h3>SNR — dB</h3><p>Perbandingan daya sinyal terhadap daya noise. SNR lebih tinggi umumnya memungkinkan keputusan simbol yang lebih andal atau modulasi berorde lebih tinggi.</p></article>
+        <article class="card bridge"><h3>BER — rasio atau %</h3><p>Proporsi bit yang salah sebelum atau pada tahap koreksi tertentu. BER bukan packet loss: error bit dapat diperbaiki FEC atau dipulihkan melalui retransmisi link.</p></article>
+        <article class="card bridge"><h3>Modulasi dan coding</h3><p>Menentukan jumlah bit per simbol dan ketahanan terhadap gangguan. Adaptasi modulasi dapat menukar laju data dengan reliabilitas saat kualitas kanal berubah.</p></article>
+      </div>
+    </section>
+
+    <section aria-labelledby="relationshipTitle">
+      <div class="section-head"><div><h2 id="relationshipTitle">Hubungan yang perlu diingat</h2></div></div>
+      <div class="card relationships">
+        <div class="equation" aria-label="Goodput lebih kecil atau sama dengan throughput, dan throughput lebih kecil atau sama dengan kapasitas kanal">
+          <span class="node" style="color:var(--green)">Goodput</span><span class="operator">≤</span><span class="node" style="color:var(--blue)">Throughput</span><span class="operator">≤</span><span class="node" style="color:var(--purple)">Kapasitas kanal</span>
+        </div>
+        <div class="explain-grid">
+          <div><strong>Bandwidth ≠ kapasitas.</strong><br>Bandwidth fisik adalah rentang frekuensi dalam Hz; kapasitas adalah batas laju informasi dalam bps.</div>
+          <div><strong>Bandwidth tinggi ≠ latency rendah.</strong><br>Jarak, propagasi, antrean, pemrosesan, dan serialisasi tetap menentukan waktu tempuh.</div>
+          <div><strong>BER ≠ packet loss.</strong><br>Koreksi error dan retransmisi lapisan tautan dapat mencegah error bit terlihat sebagai paket hilang.</div>
+        </div>
+      </div>
+    </section>
+
+    <section id="ringkasan">
+      <div class="section-head"><div><h2>Tabel ringkas yang telah dikoreksi</h2></div><p>Pemisahan domain mencegah pencampuran antara besaran sinyal dan metrik layanan jaringan.</p></div>
+      <div class="card table-wrap">
+        <table>
+          <thead><tr><th>Metrik</th><th>Domain</th><th>Makna</th><th>Satuan umum</th><th>Pertanyaan yang dijawab</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Bandwidth sinyal</strong></td><td class="domain">Fisik/spektrum</td><td>Rentang frekuensi yang ditempati atau dilewatkan kanal.</td><td>Hz, kHz, MHz, GHz</td><td>Seberapa lebar pita frekuensi yang tersedia?</td></tr>
+            <tr><td><strong>Kapasitas kanal</strong></td><td class="domain">Teori informasi</td><td>Batas teoretis laju informasi pada kondisi kanal tertentu.</td><td>bps, Mbps, Gbps</td><td>Berapa laju maksimum teoretis yang dapat dipertahankan?</td></tr>
+            <tr><td><strong>Throughput</strong></td><td class="domain">Transfer data</td><td>Laju seluruh data yang benar-benar dipindahkan pada titik ukur.</td><td>bps, Mbps, Gbps</td><td>Berapa laju aktual yang dicapai?</td></tr>
+            <tr><td><strong>Goodput</strong></td><td class="domain">Aplikasi</td><td>Laju payload aplikasi yang berguna tanpa overhead dan retransmisi.</td><td>bps, Mbps</td><td>Berapa data berguna yang diterima aplikasi?</td></tr>
+            <tr><td><strong>Delay/latency</strong></td><td class="domain">Waktu</td><td>Waktu perjalanan satu arah dari sumber ke tujuan.</td><td>ms</td><td>Berapa lama informasi mencapai tujuan?</td></tr>
+            <tr><td><strong>RTT</strong></td><td class="domain">Waktu</td><td>Waktu perjalanan pergi dan kembali.</td><td>ms</td><td>Berapa lama satu siklus permintaan–respons?</td></tr>
+            <tr><td><strong>Jitter</strong></td><td class="domain">Variasi waktu</td><td>Perubahan delay antar-paket dari waktu ke waktu.</td><td>ms</td><td>Seberapa konsisten waktu kedatangan paket?</td></tr>
+            <tr><td><strong>Packet loss</strong></td><td class="domain">Keandalan paket</td><td>Proporsi paket yang dikirim tetapi tidak diterima.</td><td>%</td><td>Seberapa banyak paket hilang?</td></tr>
+            <tr><td><strong>Availability</strong></td><td class="domain">Layanan</td><td>Proporsi waktu layanan memenuhi kriteria siap pakai.</td><td>%</td><td>Seberapa sering layanan dapat digunakan?</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="page">Materi interaktif ini ditujukan untuk pembelajaran konsep. Pengukuran produksi harus menyatakan titik ukur, durasi, arah trafik, protokol, metode statistik, dan kondisi kanal.</div>
+  </footer>
+
+  <script>
+    const metrics = {
+      bandwidth: {
+        domain: 'Domain fisik', title: 'Bandwidth sinyal', unit: 'Hz, kHz, MHz, GHz',
+        meaning: 'Rentang frekuensi yang ditempati sinyal atau dilewatkan kanal, yakni selisih antara frekuensi batas atas dan batas bawah.',
+        question: 'Seberapa lebar spektrum frekuensi yang tersedia atau digunakan?',
+        relation: 'Bandwidth yang lebih lebar dapat meningkatkan kapasitas, tetapi hasilnya juga bergantung pada SNR, modulasi, dan coding.',
+        measure: 'Spectrum analyzer, occupied bandwidth, atau spesifikasi kanal.',
+        pitfall: 'MHz tidak sama dengan Mbps. Keduanya terkait, tetapi tidak dapat dipertukarkan.'
+      },
+      capacity: {
+        domain: 'Domain teori informasi', title: 'Kapasitas kanal', unit: 'bps, Mbps, Gbps',
+        meaning: 'Batas teoretis laju informasi yang dapat dikirim melalui kanal dengan bandwidth dan tingkat noise tertentu.',
+        question: 'Berapa laju informasi maksimum yang secara teoretis dapat dipertahankan?',
+        relation: 'Pada kanal Gaussian ideal, batas Shannon adalah C = B log₂(1 + SNR), dengan SNR berbentuk rasio linear.',
+        measure: 'Perhitungan model kanal atau estimasi berdasarkan bandwidth, SNR, modulasi, dan coding.',
+        pitfall: 'Kapasitas merupakan batas teoretis, bukan hasil speed test dan bukan nilai yang selalu dapat dicapai.'
+      },
+      throughput: {
+        domain: 'Domain transfer data', title: 'Throughput', unit: 'bps, Mbps, Gbps',
+        meaning: 'Laju seluruh data yang benar-benar berhasil dipindahkan pada titik pengukuran selama interval tertentu.',
+        question: 'Berapa laju aktual yang dicapai?',
+        relation: 'Throughput dibatasi kapasitas kanal, kemudian dipengaruhi akses media, coding, antrean, kontrol kemacetan, dan retransmisi.',
+        measure: 'iperf3, counter antarmuka, flow telemetry, atau packet capture.',
+        pitfall: 'Throughput bukan bandwidth spektral dan belum tentu mencerminkan data aplikasi yang berguna.'
+      },
+      goodput: {
+        domain: 'Domain aplikasi', title: 'Goodput', unit: 'bps, Mbps',
+        meaning: 'Laju payload aplikasi yang berguna setelah header protokol, retransmisi, padding, dan data duplikat dikeluarkan.',
+        question: 'Berapa laju informasi yang benar-benar bermanfaat bagi aplikasi?',
+        relation: 'Gangguan sinyal dapat menaikkan error dan retransmisi sehingga goodput turun meskipun laju fisik tidak berubah.',
+        measure: 'Ukuran payload aplikasi dibagi durasi transfer, lalu dikonfirmasi dengan packet capture.',
+        pitfall: 'Goodput bergantung pada definisi payload dan lapisan tempat pengukuran dilakukan.'
+      },
+      delay: {
+        domain: 'Domain waktu', title: 'Delay / latency', unit: 'ms',
+        meaning: 'Waktu satu arah dari sumber ke tujuan yang terdiri atas delay propagasi, transmisi, pemrosesan, dan antrean.',
+        question: 'Berapa lama informasi mencapai penerima?',
+        relation: 'Kecepatan rambat medium memengaruhi propagation delay, sedangkan ukuran paket dan laju link memengaruhi transmission delay.',
+        measure: 'Timestamp pada dua sisi dengan jam tersinkronisasi atau packet capture terkoordinasi.',
+        pitfall: 'Bandwidth tinggi tidak otomatis menghasilkan latency rendah; antrean dan jarak tetap berpengaruh.'
+      },
+      rtt: {
+        domain: 'Domain waktu', title: 'Round-Trip Time (RTT)', unit: 'ms',
+        meaning: 'Waktu sejak permintaan dikirim sampai respons yang berkaitan kembali ke sumber.',
+        question: 'Berapa lama satu siklus komunikasi pergi dan kembali?',
+        relation: 'RTT mencakup dua arah propagasi, transmisi, pemrosesan, dan antrean; jalur pergi dan pulang dapat berbeda.',
+        measure: 'Ping, waktu handshake TCP, atau packet capture pada sumber.',
+        pitfall: 'RTT tidak selalu dua kali delay satu arah karena jalur jaringan dapat asimetris.'
+      },
+      jitter: {
+        domain: 'Domain variasi waktu', title: 'Jitter', unit: 'ms',
+        meaning: 'Variasi delay paket dari waktu ke waktu akibat perubahan antrean, akses media, retransmisi, atau jalur.',
+        question: 'Seberapa stabil waktu kedatangan paket?',
+        relation: 'Pada kanal nirkabel, perubahan kualitas sinyal dapat memicu adaptasi modulasi dan retransmisi sehingga waktu tiba makin bervariasi.',
+        measure: 'RTP/RTCP, iperf3 UDP, atau analisis timestamp packet capture.',
+        pitfall: 'Nilai jitter tidak dapat dibandingkan tanpa metode statistik dan interval pengukuran yang sama.'
+      },
+      loss: {
+        domain: 'Domain keandalan paket', title: 'Packet loss', unit: '%',
+        meaning: 'Proporsi paket yang dikirim tetapi tidak diterima pada titik tujuan pengukuran.',
+        question: 'Berapa bagian paket yang tidak berhasil sampai?',
+        relation: 'SNR rendah dapat meningkatkan BER, tetapi FEC dan retransmisi link dapat mencegah error bit terlihat sebagai packet loss.',
+        measure: 'Sequence number, counter perangkat, atau packet capture pada kedua ujung.',
+        pitfall: 'BER dan packet loss bukan metrik yang sama; loss juga dapat disebabkan kemacetan atau kebijakan perangkat.'
+      },
+      availability: {
+        domain: 'Domain layanan', title: 'Availability', unit: '%',
+        meaning: 'Proporsi waktu ketika layanan memenuhi kriteria operasional yang telah didefinisikan.',
+        question: 'Seberapa sering layanan benar-benar dapat digunakan?',
+        relation: 'Gangguan kanal dapat menurunkan availability jika mutu berada di bawah ambang layanan, tetapi kegagalan aplikasi, perangkat, dan daya juga berpengaruh.',
+        measure: 'Synthetic monitoring, health check aplikasi, log insiden, dan SLI/SLO.',
+        pitfall: 'Sinyal terdeteksi atau port terbuka belum membuktikan layanan tersedia secara fungsional.'
+      }
+    };
+
+    const detailFields = {
+      domain: document.getElementById('metricDomain'), title: document.getElementById('metricTitle'),
+      unit: document.getElementById('metricUnit'), meaning: document.getElementById('metricMeaning'),
+      question: document.getElementById('metricQuestion'), relation: document.getElementById('metricRelation'),
+      measure: document.getElementById('metricMeasure'), pitfall: document.getElementById('metricPitfall')
+    };
+
+    document.querySelectorAll('.metric-button').forEach((button) => {
+      button.addEventListener('click', () => {
+        const item = metrics[button.dataset.key];
+        document.querySelectorAll('.metric-button').forEach((candidate) => candidate.setAttribute('aria-pressed', String(candidate === button)));
+        Object.keys(detailFields).forEach((key) => { detailFields[key].textContent = item[key]; });
+      });
+    });
+
+    const inputs = ['bw', 'snr', 'efficiency', 'overhead', 'loss', 'downtime'];
+    const elements = Object.fromEntries(inputs.map((id) => [id, document.getElementById(id)]));
+
+    function formatRate(mbps) {
+      if (mbps >= 1000) return `${(mbps / 1000).toFixed(2)} Gbps`;
+      if (mbps >= 10) return `${mbps.toFixed(1)} Mbps`;
+      return `${mbps.toFixed(2)} Mbps`;
+    }
+
+    function updateSimulation() {
+      const bandwidthMHz = Number(elements.bw.value);
+      const snrDb = Number(elements.snr.value);
+      const efficiency = Number(elements.efficiency.value) / 100;
+      const overhead = Number(elements.overhead.value) / 100;
+      const packetLoss = Number(elements.loss.value) / 100;
+      const downtimeMinutes = Number(elements.downtime.value);
+      const snrLinear = Math.pow(10, snrDb / 10);
+      const capacityMbps = bandwidthMHz * Math.log2(1 + snrLinear);
+      const throughputMbps = capacityMbps * efficiency;
+      const goodputMbps = throughputMbps * (1 - overhead) * (1 - packetLoss);
+      const monthMinutes = 30 * 24 * 60;
+      const availability = Math.max(0, (monthMinutes - downtimeMinutes) / monthMinutes * 100);
+
+      document.getElementById('bwOut').textContent = `${bandwidthMHz} MHz`;
+      document.getElementById('snrOut').textContent = `${snrDb} dB`;
+      document.getElementById('efficiencyOut').textContent = `${Math.round(efficiency * 100)}%`;
+      document.getElementById('overheadOut').textContent = `${Math.round(overhead * 100)}%`;
+      document.getElementById('lossOut').textContent = `${(packetLoss * 100).toFixed(1)}%`;
+      document.getElementById('downtimeOut').textContent = `${downtimeMinutes} menit`;
+      document.getElementById('capacityResult').textContent = formatRate(capacityMbps);
+      document.getElementById('throughputResult').textContent = formatRate(throughputMbps);
+      document.getElementById('goodputResult').textContent = formatRate(goodputMbps);
+      document.getElementById('availabilityResult').textContent = `${availability.toFixed(3)}%`;
+      document.getElementById('capacityBarValue').textContent = formatRate(capacityMbps);
+      document.getElementById('throughputBarValue').textContent = formatRate(throughputMbps);
+      document.getElementById('goodputBarValue').textContent = formatRate(goodputMbps);
+      document.getElementById('capacityBar').style.width = '100%';
+      document.getElementById('throughputBar').style.width = `${Math.max(0, Math.min(100, throughputMbps / capacityMbps * 100))}%`;
+      document.getElementById('goodputBar').style.width = `${Math.max(0, Math.min(100, goodputMbps / capacityMbps * 100))}%`;
+    }
+
+    inputs.forEach((id) => elements[id].addEventListener('input', updateSimulation));
+    updateSimulation();
+  </script>
+</body>
+</html>
