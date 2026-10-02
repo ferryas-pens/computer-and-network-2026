@@ -139,7 +139,7 @@ Pada subnet IPv4 tradisional, alamat dengan seluruh bit host bernilai 0 adalah *
 
 ## 5.6 Dari Sistem Kelas ke CIDR
 
-Pada masa awal IPv4, alamat unicast dibagi menjadi kelas A, B, dan C dengan batas prefiks baku. Kelas D digunakan untuk multicast, sedangkan sebagian ruang yang dahulu disebut kelas E dicadangkan. Sistem ini memudahkan implementasi awal, tetapi alokasinya tidak lentur. Organisasi yang membutuhkan sedikit lebih banyak dari 254 host dapat menerima jaringan kelas B dengan puluhan ribu kemungkinan alamat, sehingga terjadi pemborosan besar.
+Pada masa awal IPv4, alamat unicast dibagi menjadi kelas A, B, dan C dengan batas prefiks baku. Kelas D digunakan untuk multicast, sedangkan sebagian ruang yang dahulu disebut kelas E dicadangkan. Sistem ini memudahkan implementasi awal, tetapi alokasinya tidak flesibel sesuai dengan kebutuhan. Organisasi yang membutuhkan sedikit lebih banyak dari 254 host dapat menerima jaringan kelas B dengan puluhan ribu kemungkinan alamat, sehingga terjadi pemborosan besar.
 
 CIDR (*Classless Inter-Domain Routing*) menggantikan ketergantungan pada kelas dengan panjang prefiks eksplisit. Prefiks dapat berukuran `/20`, `/23`, `/27`, atau panjang lain sesuai kebutuhan dan kebijakan alokasi. CIDR juga mendukung agregasi rute. Sebagai contoh, beberapa jaringan yang berurutan dapat diumumkan sebagai satu prefiks ringkas apabila batas binernya memungkinkan. Agregasi mengurangi jumlah entri yang harus dipertahankan router.
 
