@@ -1,0 +1,143 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="description" content="Media pembelajaran interaktif Bab 6: subnetting IPv4, FLSM, VLSM, overlap, route summarization, dan perencanaan IPv6.">
+  <title>Bab 6 — Subnetting Interaktif</title>
+  <style>
+    :root{color-scheme:light dark;--bg:#f4f7fb;--panel:#fff;--panel2:#edf3fa;--text:#182235;--muted:#5d6a7e;--line:#d6dfeb;--blue:#1769df;--green:#14805c;--orange:#bd6508;--red:#bd3038;--purple:#7048c7;--shadow:0 16px 44px rgba(30,50,80,.1)}
+    @media(prefers-color-scheme:dark){:root{--bg:#0e1521;--panel:#172131;--panel2:#202c3f;--text:#edf3fc;--muted:#afbdd0;--line:#36445b;--blue:#70aaff;--green:#5bcca0;--orange:#ffb45d;--red:#ff7f88;--purple:#b59cff;--shadow:0 18px 46px rgba(0,0,0,.28)}}
+    *{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:radial-gradient(circle at 10% 0,color-mix(in srgb,var(--blue) 10%,transparent),transparent 34rem),var(--bg);color:var(--text);font-family:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;line-height:1.55}button,input,textarea,select{font:inherit}button:focus-visible,input:focus-visible,textarea:focus-visible,select:focus-visible{outline:3px solid color-mix(in srgb,var(--blue) 40%,transparent);outline-offset:2px}.wrap{width:min(1180px,calc(100% - 30px));margin:auto}header{padding:46px 0 26px}.eyebrow{color:var(--blue);font-size:.8rem;font-weight:800;letter-spacing:.09em;text-transform:uppercase}h1{font-size:clamp(2rem,5vw,3.8rem);line-height:1.08;letter-spacing:-.045em;margin:8px 0 10px;max-width:950px}.lead{color:var(--muted);font-size:clamp(1rem,2vw,1.2rem);max-width:900px;margin:0}.principle{margin-top:22px;padding:16px 18px;border-left:5px solid var(--blue);background:color-mix(in srgb,var(--blue) 8%,var(--panel));border-radius:0 14px 14px 0}nav{position:sticky;top:0;z-index:20;border-block:1px solid var(--line);background:color-mix(in srgb,var(--bg) 88%,transparent);backdrop-filter:blur(14px)}nav .wrap{display:flex;gap:7px;padding:9px 0;overflow-x:auto}nav a{flex:0 0 auto;text-decoration:none;color:var(--muted);font-size:.87rem;font-weight:700;padding:8px 11px;border-radius:9px}nav a:hover{background:var(--panel2);color:var(--text)}main{padding:16px 0 60px}section{margin-top:28px;scroll-margin-top:70px}.head{display:flex;justify-content:space-between;align-items:end;gap:18px;margin-bottom:13px}.head h2{margin:0;font-size:clamp(1.35rem,3vw,2rem);letter-spacing:-.025em}.head p{margin:0;max-width:620px;color:var(--muted)}.card{background:var(--panel);border:1px solid var(--line);border-radius:17px;box-shadow:var(--shadow)}.concepts{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:11px}.concept{padding:18px;border-top:5px solid var(--blue)}.concept:nth-child(2){border-top-color:var(--green)}.concept:nth-child(3){border-top-color:var(--orange)}.concept:nth-child(4){border-top-color:var(--purple)}.concept small{color:var(--muted);font-weight:800;text-transform:uppercase;letter-spacing:.06em}.concept h3{margin:5px 0}.concept p{color:var(--muted);margin:0}.formula{margin-top:11px;padding:8px 10px;border-radius:9px;background:var(--panel2);font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.82rem}.tool{padding:21px}.grid2{display:grid;grid-template-columns:1fr 1fr;gap:20px}.field{display:grid;gap:6px;margin-bottom:13px}.field label{font-weight:750}.field input,.field textarea,.field select{width:100%;border:1px solid var(--line);border-radius:10px;padding:10px 11px;background:var(--bg);color:var(--text)}.field textarea{min-height:125px;resize:vertical}.help{margin:0;color:var(--muted);font-size:.78rem}.actions{display:flex;flex-wrap:wrap;gap:8px}.btn{border:1px solid var(--line);border-radius:10px;padding:9px 13px;background:var(--panel2);color:var(--text);font-weight:750;cursor:pointer}.btn.primary{background:var(--blue);border-color:var(--blue);color:#fff}.btn:hover{filter:brightness(.97)}.error{display:none;margin-top:12px;padding:10px;border-radius:10px;background:color-mix(in srgb,var(--red) 11%,var(--panel));color:var(--red);font-weight:700}.results{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}.result{padding:13px;border-radius:12px;background:var(--panel2)}.result span{display:block;color:var(--muted);font-size:.76rem;font-weight:750}.result strong{display:block;margin-top:3px;font-size:1.07rem;word-break:break-word;font-variant-numeric:tabular-nums}.binary{margin-top:12px;padding:12px;border-radius:11px;background:var(--panel2);overflow-x:auto;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.79rem;white-space:pre}.vizbar{margin-top:13px;display:flex;height:44px;border-radius:10px;overflow:hidden;background:var(--panel2)}.vizbar .net{display:grid;place-items:center;background:var(--blue);color:#fff;font-size:.76rem;font-weight:800}.vizbar .host{display:grid;place-items:center;background:var(--green);color:#fff;font-size:.76rem;font-weight:800;min-width:42px}.tablewrap{overflow-x:auto;border:1px solid var(--line);border-radius:13px;margin-top:14px}table{width:100%;border-collapse:collapse;min-width:720px;background:var(--panel)}th,td{text-align:left;padding:11px 12px;border-bottom:1px solid var(--line);vertical-align:top}th{background:var(--panel2);color:var(--muted);font-size:.76rem;text-transform:uppercase;letter-spacing:.045em}tbody tr:last-child td{border-bottom:0}tbody tr:hover{background:color-mix(in srgb,var(--blue) 5%,transparent)}code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;color:var(--text)}.status{padding:14px;border-radius:12px;background:var(--panel2);margin-top:12px}.status.good{border-left:5px solid var(--green)}.status.bad{border-left:5px solid var(--red)}.status strong{display:block;margin-bottom:3px}.status p{margin:0;color:var(--muted)}.ipv6calc{display:grid;grid-template-columns:.85fr 1.15fr;gap:20px}.bigstat{display:grid;place-items:center;text-align:center;min-height:180px;padding:22px;background:var(--panel2);border-radius:14px}.bigstat span{color:var(--muted);font-weight:750}.bigstat strong{font-size:clamp(2rem,6vw,4rem);color:var(--purple);font-variant-numeric:tabular-nums}.quiz{display:grid;gap:12px}.question{padding:17px}.question h3{margin:0 0 10px;font-size:1rem}.options{display:grid;gap:7px}.option{display:flex;gap:8px;align-items:flex-start;padding:8px;border-radius:9px;background:var(--panel2)}.quiz-result{margin-top:13px;font-weight:800}.note{margin-top:15px;padding:13px;border-radius:12px;background:color-mix(in srgb,var(--orange) 9%,var(--panel));color:var(--muted)}footer{border-top:1px solid var(--line);padding:24px 0 38px;color:var(--muted);font-size:.82rem}
+    @media(max-width:900px){.concepts{grid-template-columns:repeat(2,minmax(0,1fr))}.grid2,.ipv6calc{grid-template-columns:1fr}}
+    @media(max-width:620px){.wrap{width:min(100% - 20px,1180px)}header{padding-top:30px}.head{display:block}.head p{margin-top:5px}.concepts,.results{grid-template-columns:1fr}.tool{padding:15px}}
+  </style>
+</head>
+<body>
+  <header class="wrap">
+    <div class="eyebrow">Bab 6 · media pembelajaran mandiri</div>
+    <h1>Subnetting IPv4, VLSM, dan Perencanaan IPv6</h1>
+    <p class="lead">Pelajari subnetting sebagai keputusan arsitektural: hitung batas jaringan, bagi prefix secara seragam atau variabel, cegah overlap, dan rancang ruang IPv6 yang konsisten.</p>
+    <div class="principle"><strong>Prinsip utama:</strong> subnetting bukan hanya mencari Network ID dan broadcast. Rancangan harus memenuhi kapasitas, alignment, containment, jalur routing, keamanan, dokumentasi, serta kebutuhan pertumbuhan.</div>
+  </header>
+  <nav><div class="wrap"><a href="#konsep">Konsep</a><a href="#kalkulator">Kalkulator IPv4</a><a href="#flsm">FLSM</a><a href="#vlsm">VLSM</a><a href="#overlap">Overlap</a><a href="#ipv6">IPv6</a><a href="#kuis">Kuis</a></div></nav>
+  <main class="wrap">
+    <section id="konsep">
+      <div class="head"><h2>Peta keputusan subnetting</h2><p>Empat pertanyaan berikut membentuk alur analisis dari kebutuhan hingga validasi.</p></div>
+      <div class="concepts">
+        <article class="card concept"><small>1 · Kebutuhan</small><h3>Berapa host dan subnet?</h3><p>Masukkan gateway, reservasi, high availability, perangkat sementara, dan proyeksi pertumbuhan.</p><div class="formula">2ʰ − 2 ≥ kebutuhan host</div></article>
+        <article class="card concept"><small>2 · Pembagian</small><h3>FLSM atau VLSM?</h3><p>FLSM sederhana dan seragam. VLSM lebih efisien ketika kebutuhan setiap segmen berbeda.</p><div class="formula">child prefix = parent + bit pinjaman</div></article>
+        <article class="card concept"><small>3 · Batas</small><h3>Apakah aligned?</h3><p>Network ID harus berada pada kelipatan ukuran blok dan seluruh child harus berada di dalam parent.</p><div class="formula">blok = 2^(32 − prefix)</div></article>
+        <article class="card concept"><small>4 · Validasi</small><h3>Adakah overlap?</h3><p>Periksa konflik prefix, DHCP pool, VLAN, gateway, route summary, dan ruang pertumbuhan.</p><div class="formula">good design = benar + dapat dioperasikan</div></article>
+      </div>
+    </section>
+
+    <section id="kalkulator">
+      <div class="head"><h2>Kalkulator subnet IPv4</h2><p>Masukkan satu alamat CIDR untuk memperoleh Network ID, broadcast, rentang host, netmask, wildcard, dan representasi biner.</p></div>
+      <div class="card tool grid2">
+        <div>
+          <div class="field"><label for="cidrInput">Alamat IPv4/CIDR</label><input id="cidrInput" value="192.168.10.77/26" spellcheck="false"><p class="help">Contoh: 192.168.10.77/26 atau 10.20.77.130/20</p></div>
+          <div class="actions"><button class="btn primary" id="calcBtn">Hitung subnet</button><button class="btn" id="exampleBtn">Contoh acak</button></div>
+          <div class="error" id="calcError" role="alert"></div>
+          <div class="vizbar" aria-label="Proporsi bit jaringan dan host"><div class="net" id="netBitsBar" style="width:81.25%">26 bit jaringan</div><div class="host" id="hostBitsBar" style="width:18.75%">6 bit host</div></div>
+          <div class="binary" id="binaryView">Alamat : 11000000.10101000.00001010.01001101
+Netmask: 11111111.11111111.11111111.11000000
+Network: 11000000.10101000.00001010.01000000</div>
+        </div>
+        <div class="results" aria-live="polite">
+          <div class="result"><span>Network ID</span><strong id="networkOut">192.168.10.64/26</strong></div>
+          <div class="result"><span>Broadcast</span><strong id="broadcastOut">192.168.10.127</strong></div>
+          <div class="result"><span>Host pertama</span><strong id="firstOut">192.168.10.65</strong></div>
+          <div class="result"><span>Host terakhir</span><strong id="lastOut">192.168.10.126</strong></div>
+          <div class="result"><span>Netmask</span><strong id="maskOut">255.255.255.192</strong></div>
+          <div class="result"><span>Wildcard</span><strong id="wildcardOut">0.0.0.63</strong></div>
+          <div class="result"><span>Jumlah alamat</span><strong id="totalOut">64</strong></div>
+          <div class="result"><span>Host dapat digunakan</span><strong id="usableOut">62</strong></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="flsm">
+      <div class="head"><h2>Generator FLSM</h2><p>Bagi parent prefix menjadi child prefix dengan ukuran seragam. Tabel dibatasi 256 baris agar browser tetap ringan.</p></div>
+      <div class="card tool">
+        <div class="grid2">
+          <div class="field"><label for="flsmParent">Parent prefix</label><input id="flsmParent" value="192.168.1.0/24" spellcheck="false"></div>
+          <div class="field"><label for="flsmChild">Child prefix</label><input id="flsmChild" type="number" min="1" max="32" value="26"></div>
+        </div>
+        <button class="btn primary" id="flsmBtn">Buat tabel FLSM</button><div class="error" id="flsmError" role="alert"></div>
+        <div id="flsmSummary" class="status good"><strong>4 subnet /26</strong><p>Masing-masing memuat 64 alamat atau 62 host konvensional.</p></div>
+        <div class="tablewrap"><table><thead><tr><th>No.</th><th>Network ID</th><th>Host pertama</th><th>Host terakhir</th><th>Broadcast</th></tr></thead><tbody id="flsmBody"></tbody></table></div>
+      </div>
+    </section>
+
+    <section id="vlsm">
+      <div class="head"><h2>Perencana VLSM</h2><p>Masukkan kebutuhan per baris. Sistem mengurutkan kebutuhan terbesar dan mengalokasikan blok dari alamat terendah yang aligned.</p></div>
+      <div class="card tool grid2">
+        <div>
+          <div class="field"><label for="vlsmParent">Parent prefix</label><input id="vlsmParent" value="192.168.10.0/24" spellcheck="false"></div>
+          <div class="field"><label for="vlsmNeeds">Nama segmen, jumlah host</label><textarea id="vlsmNeeds" spellcheck="false">Lab A,100
+Lab B,50
+Administrasi,25
+WAN,2</textarea><p class="help">Kebutuhan host diasumsikan sudah mencakup gateway dan reservasi. WAN 2 host memakai /30 konvensional dalam perencana ini.</p></div>
+          <button class="btn primary" id="vlsmBtn">Rancang VLSM</button><div class="error" id="vlsmError" role="alert"></div>
+        </div>
+        <div>
+          <div id="vlsmSummary" class="status good"><strong>Rancangan valid</strong><p>228 dari 256 alamat dialokasikan; 28 alamat tersisa, tetapi bentuk blok bebas bergantung alignment.</p></div>
+          <div class="tablewrap"><table><thead><tr><th>Segmen</th><th>Kebutuhan</th><th>Prefix</th><th>Network</th><th>Rentang</th><th>Broadcast</th></tr></thead><tbody id="vlsmBody"></tbody></table></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="overlap">
+      <div class="head"><h2>Pemeriksa overlap dan containment</h2><p>Bandingkan dua CIDR dan tentukan apakah keduanya bertabrakan, saling mencakup, atau terpisah.</p></div>
+      <div class="card tool">
+        <div class="grid2"><div class="field"><label for="cidrA">Prefix A</label><input id="cidrA" value="10.10.0.0/23"></div><div class="field"><label for="cidrB">Prefix B</label><input id="cidrB" value="10.10.1.0/24"></div></div>
+        <button class="btn primary" id="overlapBtn">Periksa prefix</button><div class="error" id="overlapError" role="alert"></div>
+        <div id="overlapStatus" class="status bad"><strong>Overlap: Prefix B berada di dalam Prefix A</strong><p>A mencakup 10.10.0.0–10.10.1.255; B mencakup 10.10.1.0–10.10.1.255.</p></div>
+      </div>
+    </section>
+
+    <section id="ipv6">
+      <div class="head"><h2>Perencanaan subnet IPv6</h2><p>Hitung jumlah subnet /64 dari delegasi site. Pada LAN umum, /64 dipakai untuk kompatibilitas SLAAC; /127 dan /128 memiliki fungsi khusus.</p></div>
+      <div class="card tool ipv6calc">
+        <div>
+          <div class="field"><label for="sitePrefix">Panjang prefix site</label><input id="sitePrefix" type="range" min="32" max="64" value="56"><p class="help"><output id="sitePrefixOut">/56</output> — geser untuk membandingkan delegasi /48, /52, /56, /60, dan lainnya.</p></div>
+          <div class="note"><strong>Catatan:</strong> end site tidak selalu memperoleh /48. Ukuran delegasi harus memberi ruang subnet yang wajar sesuai kebutuhan dan kebijakan penyedia. Menghemat alamat dengan memakai prefix lebih panjang dari /64 pada LAN dapat mengganggu mekanisme standar.</div>
+        </div>
+        <div class="bigstat"><div><span>Jumlah subnet /64 yang tersedia</span><strong id="ipv6Count">256</strong><p id="ipv6Explain">2^(64 − 56) = 2^8</p></div></div>
+      </div>
+    </section>
+
+    <section id="kuis">
+      <div class="head"><h2>Kuis pemahaman</h2><p>Jawab lima pertanyaan, lalu periksa hasil. Kuis menilai konsep, bukan hafalan perintah.</p></div>
+      <form id="quizForm" class="quiz">
+        <article class="card question"><h3>1. Berapa host konvensional yang tersedia pada /27?</h3><div class="options"><label class="option"><input type="radio" name="q1" value="a"> 14</label><label class="option"><input type="radio" name="q1" value="b"> 30</label><label class="option"><input type="radio" name="q1" value="c"> 32</label></div></article>
+        <article class="card question"><h3>2. Apa Network ID untuk 192.168.5.173/27?</h3><div class="options"><label class="option"><input type="radio" name="q2" value="a"> 192.168.5.160</label><label class="option"><input type="radio" name="q2" value="b"> 192.168.5.172</label><label class="option"><input type="radio" name="q2" value="c"> 192.168.5.176</label></div></article>
+        <article class="card question"><h3>3. Mengapa kebutuhan VLSM diurutkan dari terbesar?</h3><div class="options"><label class="option"><input type="radio" name="q3" value="a"> Agar alamat gateway selalu .1</label><label class="option"><input type="radio" name="q3" value="b"> Untuk mengurangi fragmentasi ruang alamat</label><label class="option"><input type="radio" name="q3" value="c"> Agar broadcast dapat dihapus</label></div></article>
+        <article class="card question"><h3>4. Prefix IPv4 mana yang memakai kedua alamat sebagai endpoint point-to-point?</h3><div class="options"><label class="option"><input type="radio" name="q4" value="a"> /30</label><label class="option"><input type="radio" name="q4" value="b"> /31</label><label class="option"><input type="radio" name="q4" value="c"> /32</label></div></article>
+        <article class="card question"><h3>5. Berapa subnet /64 yang tersedia dari delegasi /56?</h3><div class="options"><label class="option"><input type="radio" name="q5" value="a"> 8</label><label class="option"><input type="radio" name="q5" value="b"> 64</label><label class="option"><input type="radio" name="q5" value="c"> 256</label></div></article>
+        <div><button class="btn primary" type="submit">Periksa jawaban</button><button class="btn" type="reset">Ulangi</button><div id="quizResult" class="quiz-result" aria-live="polite"></div></div>
+      </form>
+    </section>
+  </main>
+  <footer><div class="wrap">Bab 6 — Subnetting IPv4, VLSM, dan Perencanaan IPv6. Hasil kalkulator perlu tetap divalidasi terhadap topologi, VLAN, DHCP, routing, keamanan, dan source of truth organisasi.</div></footer>
+  <script>
+    const $=id=>document.getElementById(id);const u32=n=>n>>>0;const escapeHtml=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+    function ipToInt(ip){const p=ip.trim().split('.');if(p.length!==4)throw Error('IPv4 harus terdiri atas empat oktet.');let n=0;for(const s of p){if(!/^\d+$/.test(s)||+s<0||+s>255)throw Error('Setiap oktet IPv4 harus bernilai 0–255.');n=(n*256)+(+s)}return u32(n)}
+    function intToIp(n){n=u32(n);return[(n>>>24)&255,(n>>>16)&255,(n>>>8)&255,n&255].join('.')}
+    function parseCidr(text){const p=text.trim().split('/');if(p.length!==2||!/^(?:\d|[12]\d|3[0-2])$/.test(p[1]))throw Error('Gunakan format IPv4/prefix, misalnya 192.168.1.10/24.');const prefix=+p[1],ip=ipToInt(p[0]),mask=prefix===0?0:u32(0xffffffff<<(32-prefix)),network=u32(ip&mask),size=2**(32-prefix),broadcast=u32(network+size-1);return{ip,prefix,mask,network,broadcast,size}}
+    function bin(n){return intToIp(n).split('.').map(x=>(+x).toString(2).padStart(8,'0')).join('.')}
+    function usable(c){if(c.prefix===32)return{first:c.network,last:c.network,count:1,label:'1 alamat tunggal'};if(c.prefix===31)return{first:c.network,last:c.broadcast,count:2,label:'2 endpoint point-to-point'};return{first:u32(c.network+1),last:u32(c.broadcast-1),count:c.size-2,label:(c.size-2).toLocaleString('id-ID')}}
+    function hideError(id){$(id).style.display='none'}function showError(id,e){$(id).textContent=e.message||String(e);$(id).style.display='block'}
+    function calculate(){try{hideError('calcError');const c=parseCidr($('cidrInput').value),h=usable(c),wild=u32(~c.mask);$('networkOut').textContent=`${intToIp(c.network)}/${c.prefix}`;$('broadcastOut').textContent=intToIp(c.broadcast);$('firstOut').textContent=intToIp(h.first);$('lastOut').textContent=intToIp(h.last);$('maskOut').textContent=intToIp(c.mask);$('wildcardOut').textContent=intToIp(wild);$('totalOut').textContent=c.size.toLocaleString('id-ID');$('usableOut').textContent=h.label;$('binaryView').textContent=`Alamat : ${bin(c.ip)}\nNetmask: ${bin(c.mask)}\nNetwork: ${bin(c.network)}`;$('netBitsBar').style.width=`${c.prefix/32*100}%`;$('hostBitsBar').style.width=`${(32-c.prefix)/32*100}%`;$('netBitsBar').textContent=`${c.prefix} bit jaringan`;$('hostBitsBar').textContent=`${32-c.prefix} bit host`}catch(e){showError('calcError',e)}}
+    $('calcBtn').onclick=calculate;$('cidrInput').addEventListener('keydown',e=>{if(e.key==='Enter')calculate()});$('exampleBtn').onclick=()=>{const a=['10.20.77.130/20','172.16.33.9/21','192.168.8.211/27','10.0.5.1/22'];$('cidrInput').value=a[Math.floor(Math.random()*a.length)];calculate()};
+    function flsm(){try{hideError('flsmError');const p=parseCidr($('flsmParent').value),child=+$('flsmChild').value;if(child<p.prefix||child>32)throw Error(`Child prefix harus berada antara /${p.prefix} dan /32.`);if(p.ip!==p.network)throw Error(`Parent tidak aligned. Network yang benar: ${intToIp(p.network)}/${p.prefix}.`);const count=2**(child-p.prefix);if(count>256)throw Error(`Hasil berjumlah ${count.toLocaleString('id-ID')} subnet. Perpanjang child prefix lebih sedikit agar tabel maksimal 256 baris.`);const size=2**(32-child),body=$('flsmBody');body.innerHTML='';for(let i=0;i<count;i++){const network=u32(p.network+i*size),c={network,broadcast:u32(network+size-1),prefix:child,size},h=usable(c),tr=document.createElement('tr');tr.innerHTML=`<td>${i+1}</td><td><code>${intToIp(network)}/${child}</code></td><td>${intToIp(h.first)}</td><td>${intToIp(h.last)}</td><td>${intToIp(c.broadcast)}</td>`;body.appendChild(tr)}const hosts=usable({network:0,broadcast:size-1,prefix:child,size}).label;$('flsmSummary').innerHTML=`<strong>${count.toLocaleString('id-ID')} subnet /${child}</strong><p>Masing-masing memuat ${size.toLocaleString('id-ID')} alamat atau ${hosts}.</p>`}catch(e){showError('flsmError',e)}}$('flsmBtn').onclick=flsm;
+    function prefixForHosts(hosts){if(hosts<=0)throw Error('Kebutuhan host harus lebih dari nol.');for(let h=2;h<=32;h++)if(2**h-2>=hosts)return 32-h;throw Error('Kebutuhan terlalu besar untuk IPv4.')}
+    function vlsm(){try{hideError('vlsmError');const p=parseCidr($('vlsmParent').value);if(p.ip!==p.network)throw Error(`Parent tidak aligned. Network yang benar: ${intToIp(p.network)}/${p.prefix}.`);const rows=$('vlsmNeeds').value.split(/\n+/).filter(x=>x.trim()).map((line,i)=>{const parts=line.split(',');if(parts.length!==2||!parts[0].trim()||!/^\d+$/.test(parts[1].trim()))throw Error(`Baris ${i+1} harus berbentuk: Nama, jumlah host.`);const hosts=+parts[1];return{name:parts[0].trim(),hosts,prefix:prefixForHosts(hosts)}}).sort((a,b)=>b.hosts-a.hosts);if(!rows.length)throw Error('Masukkan sedikitnya satu kebutuhan.');let cursor=p.network,used=0;const body=$('vlsmBody');body.innerHTML='';for(const r of rows){const size=2**(32-r.prefix),aligned=Math.ceil(cursor/size)*size;if(aligned+size-1>p.broadcast)throw Error(`Ruang parent habis saat mengalokasikan ${r.name} /${r.prefix}.`);const network=u32(aligned),broadcast=u32(aligned+size-1),c={network,broadcast,prefix:r.prefix,size},h=usable(c),tr=document.createElement('tr');tr.innerHTML=`<td>${escapeHtml(r.name)}</td><td>${r.hosts}</td><td>/${r.prefix}</td><td><code>${intToIp(network)}</code></td><td>${intToIp(h.first)}–${intToIp(h.last)}</td><td>${intToIp(broadcast)}</td>`;body.appendChild(tr);cursor=aligned+size;used+=size}const remaining=p.size-used;$('vlsmSummary').className='status good';$('vlsmSummary').innerHTML=`<strong>Rancangan valid</strong><p>${used.toLocaleString('id-ID')} dari ${p.size.toLocaleString('id-ID')} alamat dialokasikan; ${remaining.toLocaleString('id-ID')} alamat belum dialokasikan. Ruang bebas tetap perlu dianalisis berdasarkan alignment.</p>`}catch(e){showError('vlsmError',e);$('vlsmSummary').className='status bad';$('vlsmSummary').innerHTML='<strong>Rancangan belum valid</strong><p>Perbaiki input atau gunakan parent prefix yang lebih besar.</p>'}}$('vlsmBtn').onclick=vlsm;
+    function overlap(){try{hideError('overlapError');const a=parseCidr($('cidrA').value),b=parseCidr($('cidrB').value),hit=a.network<=b.broadcast&&b.network<=a.broadcast,ainb=b.network<=a.network&&b.broadcast>=a.broadcast,bina=a.network<=b.network&&a.broadcast>=b.broadcast;let title,detail,cls;if(!hit){title='Tidak overlap';detail='Kedua interval alamat terpisah.';cls='status good'}else if(bina&&!ainb){title='Overlap: Prefix B berada di dalam Prefix A';detail='A mencakup seluruh ruang B.';cls='status bad'}else if(ainb&&!bina){title='Overlap: Prefix A berada di dalam Prefix B';detail='B mencakup seluruh ruang A.';cls='status bad'}else{title='Overlap: kedua prefix merujuk blok yang sama atau beririsan';detail='Jangan mengalokasikan keduanya pada domain routing yang akan saling terhubung.';cls='status bad'}$('overlapStatus').className=cls;$('overlapStatus').innerHTML=`<strong>${title}</strong><p>A: ${intToIp(a.network)}–${intToIp(a.broadcast)}; B: ${intToIp(b.network)}–${intToIp(b.broadcast)}. ${detail}</p>`}catch(e){showError('overlapError',e)}}$('overlapBtn').onclick=overlap;
+    function ipv6(){const p=+$('sitePrefix').value,exp=64-p,count=2**exp;$('sitePrefixOut').textContent=`/${p}`;$('ipv6Count').textContent=count.toLocaleString('id-ID');$('ipv6Explain').textContent=`2^(64 − ${p}) = 2^${exp}`}$('sitePrefix').oninput=ipv6;
+    $('quizForm').onsubmit=e=>{e.preventDefault();const ans={q1:'b',q2:'a',q3:'b',q4:'b',q5:'c'};let score=0,answered=0;for(const[k,v]of Object.entries(ans)){const x=document.querySelector(`input[name="${k}"]:checked`);if(x){answered++;if(x.value===v)score++}}$('quizResult').textContent=`Skor: ${score}/5. ${answered<5?`${5-answered} pertanyaan belum dijawab. `:''}${score===5?'Seluruh konsep dasar telah dikuasai.':score>=3?'Tinjau kembali jawaban yang belum tepat.':'Pelajari kembali kalkulator, VLSM, /31, dan subnet IPv6.'}`};$('quizForm').onreset=()=>setTimeout(()=>$('quizResult').textContent='',0);
+    calculate();flsm();vlsm();overlap();ipv6();
+  </script>
+</body>
+</html>
